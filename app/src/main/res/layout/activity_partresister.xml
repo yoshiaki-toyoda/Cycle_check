@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="16dp"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp"
+    android:paddingTop="16dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="396dp"
+            android:layout_height="37dp"
+            android:background="?attr/colorPrimary"
+            android:minHeight="?attr/actionBarSize"
+            android:theme="?attr/actionBarTheme"
+            app:title="構成部品登録" />
+
+        <TextView
+            android:id="@+id/flamelTextview"
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:layout_weight="1"
+            android:text="フレーム型番"
+            android:textSize="10sp" />
+
+        <EditText
+            android:id="@+id/flamelText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="フレーム型番"
+            android:textSize="10sp" />
+
+        <TextView
+            android:id="@+id/fdelayTextview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="フロントディレイラー型番"
+            android:textSize="10sp" />
+
+        <EditText
+            android:id="@+id/fdelayText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="フロントディレイラー型番"
+            android:textSize="10sp" />
+
+        <TextView
+            android:id="@+id/ldelayTextview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="リアディレイラー型番"
+            android:textSize="10sp" />
+
+        <EditText
+            android:id="@+id/ldelayText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="リアディレイラー型番"
+            android:textSize="10sp" />
+        <TextView
+            android:id="@+id/sproketTextview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="スプロケット型番"
+            android:textSize="10sp" />
+
+        <EditText
+            android:id="@+id/sproketText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="スプロケット型番"
+            android:textSize="10sp" />
+
+        <TextView
+            android:id="@+id/wheelTextview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="ホイール型番"
+            android:textSize="10sp" />
+
+        <EditText
+            android:id="@+id/wheelText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="ホイール型番"
+            android:textSize="10sp" />
+
+        <TextView
+            android:id="@+id/TaiyaTextview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="タイヤ型番"
+            android:textSize="10sp" />
+
+        <EditText
+            android:id="@+id/TaiyaText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="タイヤ型番"
+            android:textSize="10sp" />
+
+        <TextView
+            android:id="@+id/cheenlingTextview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="チェーンリング型番"
+            android:textSize="10sp" />
+
+        <EditText
+            android:id="@+id/cheenlingText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="チェーンリング型番"
+            android:textSize="10sp" />
+
+        <TextView
+            android:id="@+id/STITextview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="STIレバー型番"
+            android:textSize="10sp" />
+
+        <EditText
+            android:id="@+id/STIText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="STIレバー型番"
+            android:textSize="10sp" />
+
+        <TextView
+        android:id="@+id/shetTextview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="サドル型番"
+        android:textSize="10sp" />
+
+        <EditText
+            android:id="@+id/shetText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="サドル型番"
+            android:textSize="10sp" />
+
+        <Button
+            android:id="@+id/button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="部品登録" />
+
+    </LinearLayout>
+</RelativeLayout>
