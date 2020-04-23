@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".DetailActivity">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".DetailActivity">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="2"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/cyclenameText"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:text="ロードバイク名"
+            android:layout_weight="2"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/disText"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:text="走行距離"
+            android:layout_weight="3"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/shopText"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:text="店舗番号"
+            android:layout_weight="3"
+            android:textSize="12sp" />
+
+    </LinearLayout>
+
+
+        <ImageView
+            android:id="@+id/imageView3"
+            android:layout_width="match_parent"
+            android:layout_height="260dp"
+
+            android:layout_weight="2"
+            android:scaleType="fitCenter"
+            app:srcCompat="@android:color/darker_gray" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/distancebutton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:text="走行実績" />
+
+            <Button
+                android:id="@+id/mentebutton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:text="メンテナンスアラート" />
+
+
+        </LinearLayout>
+
+        <EditText
+            android:id="@+id/comText2"
+            android:layout_width="454dp"
+            android:layout_height="208dp"
+            android:layout_below="@+id/mentebutton"
+            android:layout_gravity="top|left"
+            android:layout_weight="2"
+            android:hint="コメント入力" />
+
+        <Button
+            android:id="@+id/compbutton"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:layout_weight="2"
+            android:text="変更内容確定" />
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:visibility="gone" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="79dp"
+            android:layout_weight="2"
+            android:orientation="horizontal">
+
+
+            <Button
+                android:id="@+id/partbutton"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:layout_below="@+id/imageView3"
+                android:layout_weight="2"
+                android:text="部品確認/変更" />
+
+            <Button
+                android:id="@+id/confirmbutton"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:layout_weight="2"
+                android:text="レポート作成/確認" />
+        </LinearLayout>
+</LinearLayout>
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -16,16 +16,6 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="24dp"
-            android:layout_weight="2"
-            android:background="?attr/colorPrimary"
-            android:minHeight="?attr/actionBarSize"
-            android:theme="?attr/actionBarTheme"
-            app:title="アカウント作成" />
-
         <TextView
             android:id="@+id/emailTextview"
             android:layout_width="wrap_content"
@@ -124,7 +114,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="年齢"
+            android:text="生年月日"
             android:gravity="left|bottom"
             android:textSize="10sp" />
 
@@ -133,7 +123,25 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="2"
-            android:hint="年齢"
+            android:hint="例:20000615"
+            android:inputType="number"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/expTextview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="サイクリング歴"
+            android:gravity="left|bottom"
+            android:textSize="10sp" />
+
+        <EditText
+            android:id="@+id/expText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:hint="サイクリング歴"
             android:inputType="number"
             android:textSize="14sp" />
 
