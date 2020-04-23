@@ -13,6 +13,7 @@ import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.activity_login.*
+import java.lang.NullPointerException
 import java.util.HashMap
 
 class LoginActivity : AppCompatActivity() {
@@ -47,16 +48,16 @@ class LoginActivity : AppCompatActivity() {
             if (task.isSuccessful) { // 成功した場合
                 val user = mAuth.currentUser
                 val userRef = mDataBaseReference.child(UsersPATH).child(user!!.uid)
+                val intent = Intent(applicationContext, MainActivity::class.java)
 
                 login_state=1//ログイン成功フラグ
                     userRef.addListenerForSingleValueEvent(object : ValueEventListener {
-                        override fun onDataChange(snapshot: DataSnapshot) {
+                        override fun onDataChange(snapshot: DataSnapshot) {}
+                        override fun onCancelled(firebaseError: DatabaseError) {} })
 
-                        }
-                        override fun onCancelled(firebaseError: DatabaseError) {}
-                    })
                 progressBar.visibility = View.GONE// プログレスバーを非表示にする
-                finish() // Activityを閉じる
+                startActivity(intent) //Firebaseにログインした場合、MainActivityに移動
+
             } else { // 失敗した場合
                 val view = findViewById<View>(android.R.id.content) // エラーを表示する
                 Snackbar.make(view, "ログインに失敗しました", Snackbar.LENGTH_LONG).show()
@@ -69,13 +70,17 @@ class LoginActivity : AppCompatActivity() {
             // キーボードが出てたら閉じる
             val im = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
             im.hideSoftInputFromWindow(v.windowToken, InputMethodManager.HIDE_NOT_ALWAYS)
-            val email = emailText.text.toString()
-            val password = passwordText.text.toString()
+            var email = emailText.text.toString()
+            var password = passwordText.text.toString()
             if (email.length != 0 && password.length >= 6) { // フラグを落としておく
                 mIsCreateAccount = false
                 login(email, password)
                 //チェックが入っている場合、IDとPassをpreferenceに保存する
                 if(loginsave==1){
+                    saveID(email, password)
+                }else{
+                    email=""
+                    password=""
                     saveID(email, password)
                 }
             } else { // エラーを表示する

@@ -2,19 +2,26 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="jp.cycle_check">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
     <application
+        android:name=".ReamApp"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".PartresisterActivity"></activity>
+        <activity android:name=".DistanceActivity"></activity>
+        <activity android:name=".DetailActivity" />
+        <activity android:name=".InputActivity" />
+        <activity android:name=".SettingActivity" />
+        <activity android:name=".PartresisterActivity" />
         <activity android:name=".CycleresisterActivity" />
         <activity android:name=".LoginActivity" />
         <activity android:name=".CyclelistActivity" />
         <activity android:name=".UserresisterActivity" />
-
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

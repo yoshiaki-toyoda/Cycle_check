@@ -74,23 +74,24 @@ class UserresisterActivity : AppCompatActivity() {
                 if (mIsCreateAccount) { // アカウント作成の時は表示名をFirebaseに保存する
                     val name = userNameText.text.toString()//アカウント作成画面からニックネーム取得
                     val age=ageText.text.toString()
+                    val exp=expText.text.toString()
                     val data = HashMap<String, String>()
                     data["name"] = name
                     data["age"]=age
+                    data["exp"]=exp
 
                     if(sex==0){
                         data["sex"]="Male"
                     }else{
                         data["sex"]="Female"
                     }
-                    userRef.setValue(data)
-                    // 表示名をpreferenceに保存する
-                    saveName(name)
+                    userRef.setValue(data)// Firebaseにアップロード
+                    saveName(name,age, data!!["sex"]as String,exp)  // 表示名をpreferenceに保存する
                 } else {
                     userRef.addListenerForSingleValueEvent(object : ValueEventListener {
                         override fun onDataChange(snapshot: DataSnapshot) {
                             val data = snapshot.value as Map<*, *>?
-                            saveName(data!!["name"] as String)
+                            saveName(data!!["name"] as String,data!!["age"] as String,data!!["sex"] as String,data!!["exp"] as String)
                         }
                         override fun onCancelled(firebaseError: DatabaseError) {}
                     })
@@ -113,14 +114,22 @@ class UserresisterActivity : AppCompatActivity() {
             val email = emailText.text.toString()
             val password = passwordText.text.toString()
             val name = userNameText.text.toString()
+            val sex_r:String
+            val age=ageText.text.toString()
 
-            if (email.length != 0 && password.length >= 6 && name.length != 0) {
+            if(sex==0){
+               sex_r = "Male"
+            }else{
+               sex_r="Female"
+            }
+
+            if (email.length != 0 && password.length >= 6 && name.length != 0 &&sex_r.length >3 && age !=null) {
                 // ログイン時に表示名を保存するようにフラグを立てる
                 mIsCreateAccount = true
                 createAccount(email, password)
             } else {
                 // エラーを表示する
-                Snackbar.make(v, "正しく入力してください", Snackbar.LENGTH_LONG).show()
+                Snackbar.make(v, "全項目正しく入力してください", Snackbar.LENGTH_LONG).show()
             }
         }
         //ラジオボタン押下時の操作
@@ -144,11 +153,14 @@ class UserresisterActivity : AppCompatActivity() {
         // アカウントを作成する
         mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(mCreateAccountListener)
     }
-    private fun saveName(name: String) {
+    private fun saveName(name: String,age:String,sex:String,exp:String) {
         // Preferenceに保存する
         val sp = PreferenceManager.getDefaultSharedPreferences(this)
         val editor = sp.edit()
         editor.putString(NameKEY, name)
+        editor.putString(AgeKey, age)
+        editor.putString(SexKey, sex)
+        editor.putString(ExpKey, exp)
         editor.commit()
     }
     private fun login(email: String, password: String) {
