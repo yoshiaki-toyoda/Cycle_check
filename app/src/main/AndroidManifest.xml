@@ -13,7 +13,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".DistanceActivity"></activity>
+        <activity android:name=".DistanceGrapActivity"></activity>
+        <activity android:name=".DistanceActivity" />
         <activity android:name=".DetailActivity" />
         <activity android:name=".InputActivity" />
         <activity android:name=".SettingActivity" />

@@ -11,6 +11,9 @@ const val PartPath ="part"
 const val NameKEY = "name"          // Preferenceに表示名を保存する時のキー
 const val MailKEY = "email"
 const val PassKEY = "pass"
+const val AveSpeed="avesp"
+const val AveaAccel="aveac"
+
 const val AgeKey="age"
 const val SexKey="sex"
 const val ExpKey="exp"

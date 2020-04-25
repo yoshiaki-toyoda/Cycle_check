@@ -12,6 +12,7 @@ import android.view.View
 import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.text.set
+import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.database.*
 import io.realm.Realm
 import kotlinx.android.synthetic.main.activity_detail.*
@@ -69,25 +70,30 @@ class InputActivity : AppCompatActivity() {
         timePickerDialog.show()
     }
 
-    private val mOnDoneClickListener = View.OnClickListener {
-        addTask()
+    private val mOnDoneClickListener = View.OnClickListener {v ->
+        if ( dis_edit.text.toString()!="" && times_button.text!=null) {
+            addTask()
 
-        val data = java.util.HashMap<String, String>()
+            val data = java.util.HashMap<String, String>()
 
-        data["date"]=dateString
-        data["time"]=timeString
-        data["distance"]=dis_edit.text.toString()
-        mDatabaseReference = FirebaseDatabase.getInstance().reference
-        //Firebaseに走行距離を入れる
-        if(mTask!!.key=="") {
-            vGenreRef = mDatabaseReference.child(RidePath).child(cycle_uid)
-            key = vGenreRef!!.push().key.toString()
-            vGenreRef!!.child(key).setValue(data)
+            data["date"] = dateString
+            data["time"] = timeString
+            data["distance"] = dis_edit.text.toString()
+            mDatabaseReference = FirebaseDatabase.getInstance().reference
+            //Firebaseに走行距離を入れる
+            if (mTask!!.key == "") {
+                vGenreRef = mDatabaseReference.child(RidePath).child(cycle_uid)
+                key = vGenreRef!!.push().key.toString()
+                vGenreRef!!.child(key).setValue(data)
+            } else {
+                vGenreRef!!.child(mTask!!.key).setValue(data)
+
+            }
+
+            finish()
         }else{
-            vGenreRef!!.child(mTask!!.key).setValue(data)
-
+            Snackbar.make(v, "正しく入力してください", Snackbar.LENGTH_LONG).show()
         }
-        finish()
     }
     @SuppressLint("WrongThread")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -164,6 +170,7 @@ class InputActivity : AppCompatActivity() {
                     0
                 }
             mTask!!.id = identifier
+
         }
 
         val title = title_edit_text.text.toString()

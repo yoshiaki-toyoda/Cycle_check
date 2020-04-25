@@ -20,16 +20,16 @@
         app:srcCompat="@drawable/plus" />
 
     <Button
-        android:id="@+id/startresisterbutton"
+        android:id="@+id/cycledisbutton"
         android:layout_width="205dp"
         android:layout_height="68dp"
         android:layout_below="@+id/listView1"
         android:layout_alignParentStart="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginStart="22dp"
-        android:layout_marginTop="34dp"
-        android:layout_marginBottom="28dp"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="43dp"
+        android:layout_marginBottom="19dp"
         android:layout_weight="2"
-        android:text="走行実績確認" />
+        android:text="走行実績" />
 
 </RelativeLayout>
