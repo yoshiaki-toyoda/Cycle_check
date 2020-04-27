@@ -1,10 +1,37 @@
 package jp.cycle_check
 
-import android.app.AlertDialog
-import android.app.PendingIntent
+
+import android.annotation.SuppressLint
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.renderscript.ScriptGroup
+import android.util.Base64
+import android.view.Menu
+import android.view.MenuItem
+import android.view.View
+import android.widget.ListView
+import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.appcompat.widget.Toolbar
+import androidx.constraintlayout.solver.widgets.Snapshot
+import androidx.core.view.GravityCompat
+import androidx.drawerlayout.widget.DrawerLayout
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.firebase.auth.AuthResult
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.*
+
+import com.google.firebase.auth.FirebaseUser
+
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.ChildEventListener
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
+
+import android.app.AlertDialog
+import android.app.PendingIntent
+
 import com.google.firebase.database.*
 import io.realm.Realm
 import io.realm.RealmChangeListener
@@ -17,8 +44,8 @@ const val EXTRA_TASK = "jp.cycleapp.Cycle"
 
 class DistanceActivity : AppCompatActivity() {
     private lateinit var mRealm: Realm
-    private lateinit var sinfo:HashMap<String,String>
-    private lateinit var disinfo:HashMap<Int,HashMap<String,String>>
+    private lateinit var sinfo:java.util.HashMap<Any,Any>
+    private lateinit var disinfo:java.util.HashMap<Int,java.util.HashMap<Any,Any>>
     private lateinit var mDatabaseReference: DatabaseReference
     private lateinit var cycle:String
     private var mapsize:Int=0
@@ -56,13 +83,11 @@ class DistanceActivity : AppCompatActivity() {
             val intent = Intent(this@DistanceActivity,DistanceGrapActivity::class.java)
             intent.putExtra("cyclename", cycle)
             intent.putExtra("cycle_uid", cycle_uid)
-            intent.putExtra("datelist", arrayOf(datelist))
-            intent.putExtra("timelist", arrayOf(timelist))
-            intent.putExtra("dislist", arrayOf(dislist))
             startActivity(intent)
             reloadListView()
 
         }
+
 
         // Realmの設定
         mRealm = Realm.getDefaultInstance()
@@ -133,54 +158,8 @@ class DistanceActivity : AppCompatActivity() {
         listView1.adapter = mTaskAdapter
         // 表示を更新するために、アダプターにデータが変更されたことを知らせる
         mTaskAdapter.notifyDataSetChanged()
-        if (taskRealmResults.size != 0) {
-            mDatabaseReference = FirebaseDatabase.getInstance().reference
-            vCycleRef = mDatabaseReference.child(RidePath).child(cycle_uid)
-            vCycleRef!!.addListenerForSingleValueEvent(object : ValueEventListener {
-                override fun onDataChange(snapshot: DataSnapshot) {
-                    val data = mutableMapOf<String, MutableList<String>>()
-                    var map = snapshot.value as Map<String, HashMap<String, String>>
-                    sinfo = HashMap<String, String>()
-                    disinfo = HashMap<Int, HashMap<String, String>>()
-                    var count: Int = 0
-
-                    for ((k, v: HashMap<String, String>) in map) {
-                        for ((j, l) in v) {
-                            sinfo[j] = l
-
-                        }
-                        for((m,n) in sinfo){
-                                    if(m=="time"){
-                                        timelist.add(n.toString())
-                                    }else if(m=="date"){
-                                        datelist.add(n.toString())
-                                    }else if(m=="distance"){
-                                        dislist.add(n.toInt())
-                        }
-                    }
-
-                       // datelist.add(disinfo.[count].["date"].toString())
-                        //timelist.add(n["time"].toString())
-                        //dislist.add(n["distance"]!!.toInt())
 
 
-
-                        count = count + 1
-                        sinfo.clear()
-                    }
-
-
-                    for ((m:Int,n:HashMap<String, String>) in disinfo) {
-
-                    }
-
-                }
-
-
-
-                override fun onCancelled(firebaseError: DatabaseError) {}
-            })
-        }
     }
 
     override fun onDestroy() {
@@ -189,4 +168,6 @@ class DistanceActivity : AppCompatActivity() {
         mRealm.close()
     }
         }
+
+
 

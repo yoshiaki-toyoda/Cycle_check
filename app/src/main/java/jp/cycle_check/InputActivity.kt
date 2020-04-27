@@ -1,5 +1,4 @@
 package jp.cycle_check
-
 import android.annotation.SuppressLint
 import android.app.AlarmManager
 import android.app.DatePickerDialog
@@ -40,6 +39,8 @@ class InputActivity : AppCompatActivity() {
     var totaldistance:Int=0
     var dateString:String=""
     var timeString:String=""
+    var input_type:Int=0
+
 
     private val mOnDateClickListener = View.OnClickListener {v ->
         val im = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
@@ -72,24 +73,20 @@ class InputActivity : AppCompatActivity() {
 
     private val mOnDoneClickListener = View.OnClickListener {v ->
         if ( dis_edit.text.toString()!="" && times_button.text!=null) {
-            addTask()
-
-            val data = java.util.HashMap<String, String>()
-
-            data["date"] = dateString
-            data["time"] = timeString
+            val data = java.util.HashMap<String, Any>()
+            data["date"] = date_button.text.toString()
+            data["time"] = times_button.text.toString()
             data["distance"] = dis_edit.text.toString()
             mDatabaseReference = FirebaseDatabase.getInstance().reference
             //Firebaseに走行距離を入れる
-            if (mTask!!.key == "") {
-                vGenreRef = mDatabaseReference.child(RidePath).child(cycle_uid)
+            vGenreRef = mDatabaseReference.child(RidePath).child(cycle_uid)
+            if (input_type==1) {
                 key = vGenreRef!!.push().key.toString()
                 vGenreRef!!.child(key).setValue(data)
-            } else {
+            } else if(input_type==2) {
                 vGenreRef!!.child(mTask!!.key).setValue(data)
-
             }
-
+            addTask()
             finish()
         }else{
             Snackbar.make(v, "正しく入力してください", Snackbar.LENGTH_LONG).show()
@@ -112,6 +109,7 @@ class InputActivity : AppCompatActivity() {
         val taskId = intent.getIntExtra(EXTRA_TASK, -1)
         val realm = Realm.getDefaultInstance()
         mTask = realm.where(Task::class.java).equalTo("id", taskId).findFirst()
+
         realm.close()
 
         //初期入力
@@ -125,6 +123,9 @@ class InputActivity : AppCompatActivity() {
             mHour = calendar.get(Calendar.HOUR_OF_DAY)
             mMinute = calendar.get(Calendar.MINUTE)
             cycle_nameText.text=cycle
+            input_type=1
+
+
         } else {
             // 更新の場合
             content_edit_text.setText(mTask!!.contents)
@@ -139,7 +140,8 @@ class InputActivity : AppCompatActivity() {
 
             dateString = mYear.toString() + "/" + String.format("%02d", mMonth + 1) + "/" + String.format("%02d", mDay)
             timeString = String.format("%02d", mHour) + ":" + String.format("%02d", mMinute)
-
+            input_type=2
+            key=mTask!!.key
 
             title_edit_text.setText(mTask!!.title)
             dis_edit.setText(mTask!!.distance.toString())

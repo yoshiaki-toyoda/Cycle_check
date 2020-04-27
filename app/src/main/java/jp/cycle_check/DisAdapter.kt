@@ -1,6 +1,4 @@
 package jp.cycle_check
-
-
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
@@ -45,7 +43,7 @@ class DisAdapter(context: Context): BaseAdapter() {
         val simpleDateFormat1 = SimpleDateFormat("HH:mm", Locale.JAPANESE)
         val date = taskList[position].date
         val dis =taskList[position].distance
-        var totaldis = totaldis+dis
+
 
 
 
