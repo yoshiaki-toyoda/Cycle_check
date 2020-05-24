@@ -1,0 +1,489 @@
+package jp.cycle_check
+
+
+import android.annotation.SuppressLint
+import android.app.Notification
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.app.Service
+import android.content.BroadcastReceiver
+import android.content.Context
+import android.content.Intent
+import android.graphics.Color
+import android.location.*
+import android.os.*
+import androidx.annotation.RequiresApi
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationCompat.PRIORITY_MIN
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
+import android.util.Log
+import kotlin.collections.ArrayList
+
+class LocationService: Service(), LocationListener, GpsStatus.Listener {
+
+    val LOG_TAG = LocationService::class.java.simpleName
+
+    private val binder = LocationServiceBinder()
+    private var isLocationManagerUpdatingLocation: Boolean = false
+
+    var locationList: ArrayList<Location>
+    //var oldLocationList: ArrayList<Location>
+    //var noAccuracyLocationList: ArrayList<Location>
+    //var inaccurateLocationList: ArrayList<Location>
+    //var kalmanNGLocationList: ArrayList<Location>
+    var isLogging: Boolean = true
+
+    var currentSpeed = 0.0f // meters/second
+
+
+
+
+    var kalmanFilter: KalmanLatLong
+    var runStartTimeInMillis: Long = 0
+
+    var batteryLevelArray = ArrayList<Int>()
+    var batteryLevelScaledArray = ArrayList<Float>()
+    var batteryScale: Int = 0
+    var gpsCount: Int = 0
+
+    private val ANDROID_CHANNEL_ID = "com.goldrushcomputing.androidlocationstarterkitinkotlin.Channel"
+    private val NOTIFICATION_ID = 555
+
+    /* Battery Consumption */
+
+    //override fun onCreate() {
+    init {
+        isLocationManagerUpdatingLocation = false
+        locationList = ArrayList()
+        //noAccuracyLocationList = ArrayList()
+        //oldLocationList = ArrayList()
+        //inaccurateLocationList = ArrayList()
+        //kalmanNGLocationList = ArrayList()
+        kalmanFilter = KalmanLatLong(3f)
+        isLogging = true
+
+       /* val batteryInfoReceiver = object : BroadcastReceiver() {
+            override fun onReceive(ctxt: Context, intent: Intent) {
+                val batteryLevel = intent.getIntExtra(BatteryManager.EXTRA_LEVEL, 0)
+                val scale = intent.getIntExtra(BatteryManager.EXTRA_SCALE, -1)
+                val batteryLevelScaled = batteryLevel / scale.toFloat()
+
+                batteryLevelArray.add(Integer.valueOf(batteryLevel))
+                batteryLevelScaledArray.add(java.lang.Float.valueOf(batteryLevelScaled))
+                batteryScale = scale
+            }
+        }*/
+
+       // LocalBroadcastManager.getInstance(this).registerReceiver(batteryInfoReceiver, IntentFilter(Intent.ACTION_BATTERY_CHANGED))
+    }
+
+
+    override fun onStartCommand(i: Intent, flags: Int, startId: Int): Int {
+        super.onStartCommand(i, flags, startId)
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            startForeground()
+        }
+
+
+        return Service.START_STICKY
+    }
+
+
+    override fun onBind(intent: Intent?): IBinder {
+        return binder
+    }
+
+    override fun onRebind(intent: Intent) {
+        Log.d(LOG_TAG, "onRebind ")
+    }
+
+    override fun onUnbind(intent: Intent): Boolean {
+        Log.d(LOG_TAG, "onUnbind ")
+
+        return true
+    }
+
+    override fun onDestroy() {
+        Log.d(LOG_TAG, "onDestroy ")
+    }
+
+
+    //This is where we detect the app is being killed, thus stop service.
+    override fun onTaskRemoved(rootIntent: Intent) {
+        Log.d(LOG_TAG, "onTaskRemoved ")
+        this.stopUpdatingLocation()
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            stopForeground(true);
+        } else {
+            stopSelf();
+        }
+
+    }
+
+    /**
+     * Binder class
+     *
+     * @author Takamitsu Mizutori
+     */
+    inner class LocationServiceBinder : Binder() {
+        val service: LocationService
+            get() = this@LocationService
+    }
+
+    override fun onLocationChanged(newLocation: Location?) {
+        newLocation?.let{
+            val speed=it.speed
+            var totalDistanceInMeters = 0f
+            if(locationList.size>=2) {
+                for (i in 0 until locationList.size - 1) {
+                    totalDistanceInMeters += locationList[i].distanceTo(locationList[i + 1])
+                }
+            }else{
+                totalDistanceInMeters=0f
+            }
+                Log.d(LOG_TAG, totalDistanceInMeters.toString())
+
+            val currentTimeInNanos = SystemClock.elapsedRealtimeNanos()
+            val currentTimeMillis:Float=(currentTimeInNanos/1000000).toFloat()
+            val elapsedTimeInSeconds = (currentTimeMillis - runStartTimeInMillis.toFloat()) / 1000
+
+
+            Log.d(LOG_TAG, "(" + it.latitude + "," + it.longitude + ")")
+            Log.d(LOG_TAG,speed.toString() )
+            Log.d(LOG_TAG,elapsedTimeInSeconds.toString() )
+            gpsCount++
+
+            if (isLogging) {
+                locationList.add(newLocation)
+                if(speed>7){//25km/h以下の時
+                    filterAndAddLocation2(it)
+                }else {
+                    filterAndAddLocation(it)
+                }
+            }
+
+            val intent = Intent("LocationUpdated")
+            intent.putExtra("location", it)
+            intent.putExtra("speed", speed)
+            intent.putExtra("runtime", elapsedTimeInSeconds)
+            intent.putExtra("distance", totalDistanceInMeters)
+
+            LocalBroadcastManager.getInstance(this.application).sendBroadcast(intent)
+        }
+
+    }
+
+    override fun onStatusChanged(provider: String?, status: Int, extras: Bundle?) {
+        if (provider == LocationManager.GPS_PROVIDER) {
+            if (status == LocationProvider.OUT_OF_SERVICE) {
+                notifyLocationProviderStatusUpdated(false)
+            } else {
+                notifyLocationProviderStatusUpdated(true)
+            }
+        }
+    }
+
+    override fun onProviderEnabled(provider: String?) {
+        if (provider == LocationManager.GPS_PROVIDER) {
+            notifyLocationProviderStatusUpdated(true)
+        }
+    }
+
+    override fun onProviderDisabled(provider: String?) {
+        if (provider == LocationManager.GPS_PROVIDER) {
+            notifyLocationProviderStatusUpdated(false)
+        }
+
+    }
+
+    override fun onGpsStatusChanged(event: Int) {
+
+    }
+
+    private fun notifyLocationProviderStatusUpdated(isLocationProviderAvailable: Boolean) {
+        //Broadcast location provider status change here
+    }
+
+    fun startLogging() {
+        isLogging = true
+    }
+
+
+    fun stopLogging() {
+        if (locationList.size > 1 && batteryLevelArray.size > 1) {
+            val currentTimeInMillis = SystemClock.elapsedRealtimeNanos() / 1000000
+            val elapsedTimeInSeconds = (currentTimeInMillis - runStartTimeInMillis) / 1000
+            var totalDistanceInMeters = 0f
+            for (i in 0 until locationList.size - 1) {
+                totalDistanceInMeters += locationList[i].distanceTo(locationList[i + 1])
+            }
+            val batteryLevelStart = batteryLevelArray[0]
+            val batteryLevelEnd = batteryLevelArray[batteryLevelArray.size - 1]
+
+            val batteryLevelScaledStart = batteryLevelScaledArray[0]
+            val batteryLevelScaledEnd = batteryLevelScaledArray[batteryLevelScaledArray.size - 1]
+
+
+        }
+        isLogging = false
+    }
+
+
+    fun startUpdatingLocation() {
+        if (this.isLocationManagerUpdatingLocation == false) {
+            isLocationManagerUpdatingLocation = true
+            runStartTimeInMillis = SystemClock.elapsedRealtimeNanos() / 1000000
+
+            locationList.clear()
+            //oldLocationList.clear()
+            //noAccuracyLocationList.clear()
+            //inaccurateLocationList.clear()
+            //kalmanNGLocationList.clear()
+
+            val locationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
+
+            //Exception thrown when GPS or Network provider were not available on the user's device.
+            try {
+                val criteria = Criteria()
+                criteria.accuracy =
+                    Criteria.ACCURACY_FINE //setAccuracyは内部では、https://stackoverflow.com/a/17874592/1709287の用にHorizontalAccuracyの設定に変換されている。
+                criteria.powerRequirement = Criteria.POWER_HIGH
+                criteria.isAltitudeRequired = false
+                criteria.isSpeedRequired = true
+                criteria.isCostAllowed = true
+                criteria.isBearingRequired = false
+
+                //API level 9 and up
+                criteria.horizontalAccuracy = Criteria.ACCURACY_HIGH
+                criteria.verticalAccuracy = Criteria.ACCURACY_HIGH
+                //criteria.setBearingAccuracy(Criteria.ACCURACY_HIGH);
+                //criteria.setSpeedAccuracy(Criteria.ACCURACY_HIGH);
+
+                val gpsFreqInMillis = 50
+                val gpsFreqInDistance = 0.5 // in meters
+
+                locationManager.addGpsStatusListener(this)
+
+                locationManager.requestLocationUpdates(
+                    gpsFreqInMillis.toLong(),
+                    gpsFreqInDistance.toFloat(),
+                    criteria,
+                    this,
+                    null
+                )
+
+                /* Battery Consumption Measurement */
+                gpsCount = 0
+                batteryLevelArray.clear()
+                batteryLevelScaledArray.clear()
+
+            } catch (e: IllegalArgumentException) {
+                Log.e(LOG_TAG, e.localizedMessage)
+            } catch (e: SecurityException) {
+                Log.e(LOG_TAG, e.localizedMessage)
+            } catch (e: RuntimeException) {
+                Log.e(LOG_TAG, e.localizedMessage)
+            }
+
+        }
+    }
+
+
+    fun stopUpdatingLocation() {
+        if (this.isLocationManagerUpdatingLocation == true) {
+            val locationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
+            locationManager.removeUpdates(this)
+            isLocationManagerUpdatingLocation = false
+        }
+    }
+
+    @SuppressLint("NewApi")
+    private fun getLocationAge(newLocation: Location): Long {
+        val locationAge: Long
+        if (android.os.Build.VERSION.SDK_INT >= 17) {
+            val currentTimeInMilli = SystemClock.elapsedRealtimeNanos() / 1000000
+            val locationTimeInMilli = newLocation.elapsedRealtimeNanos / 1000000
+            locationAge = currentTimeInMilli - locationTimeInMilli
+        } else {
+            locationAge = System.currentTimeMillis() - newLocation.time
+        }
+        return locationAge
+    }
+
+
+    private fun filterAndAddLocation2(location: Location): Boolean {
+
+        val age = getLocationAge(location)
+
+        if (age > 5 * 1000 ) { //more than 5 seconds
+            Log.d(LOG_TAG, "Location is old")
+            //oldLocationList.add(location)
+            return false
+        }
+
+        if (location.accuracy <= 0) {
+            Log.d(LOG_TAG, "Latitidue and longitude values are invalid.")
+            //noAccuracyLocationList.add(location)
+            return false
+        }
+
+        //setAccuracy(newLocation.getAccuracy());
+        val horizontalAccuracy = location.accuracy
+        if (horizontalAccuracy > 10) { //10meter filter
+            Log.d(LOG_TAG, "Accuracy is too low.")
+            //inaccurateLocationList.add(location)
+            return false
+        }
+
+
+        /* Kalman Filter */
+        var Qvalue: Float = 3.0f
+        val locationTimeInMillis = location.elapsedRealtimeNanos / 1000000
+        val elapsedTimeInMillis = locationTimeInMillis - runStartTimeInMillis
+
+        if (currentSpeed == 0.0f) {
+            Qvalue = 1.0f //3 meters per second
+        } else {
+            Qvalue = currentSpeed // meters per second
+        }
+
+        kalmanFilter.Process(location.latitude, location.longitude, location.accuracy, elapsedTimeInMillis, Qvalue)
+        val predictedLat = kalmanFilter.get_lat()
+        val predictedLng = kalmanFilter.get_lng()
+        val predictedLocation = Location("")//provider name is unecessary
+            predictedLocation.latitude = predictedLat//your coords of course
+            predictedLocation.longitude = predictedLng
+        val predictedDeltaInMeters = predictedLocation.distanceTo(location)
+
+        if (predictedDeltaInMeters > 10) {
+            Log.d(LOG_TAG, "Kalman Filter detects mal GPS, we should probably remove this from track")
+            kalmanFilter.consecutiveRejectCount += 1
+
+            if (kalmanFilter.consecutiveRejectCount > 3) {
+                kalmanFilter = KalmanLatLong(3f) //reset Kalman Filter if it rejects more than 3 times in raw.
+            }
+
+           // kalmanNGLocationList.add(location)
+            return false
+        } else {
+            kalmanFilter.consecutiveRejectCount = 0
+        }
+
+        /* Notifiy predicted location to UI */
+        val intent = Intent("PredictLocation")
+            intent.putExtra("location", predictedLocation)
+            LocalBroadcastManager.getInstance(this.application).sendBroadcast(intent)
+        val currentTimeInMillis = SystemClock.elapsedRealtimeNanos() / 1000000
+            Log.d(LOG_TAG, "Location quality is good enough.")
+
+        currentSpeed = location.speed
+        locationList.add(location)
+
+        return true
+    }
+    private fun filterAndAddLocation(location: Location): Boolean {
+
+        val age = getLocationAge(location)
+
+        if (age > 5 * 1000) { //more than 5 seconds
+            Log.d(LOG_TAG, "Location is old")
+            //oldLocationList.add(location)
+            return false
+        }
+
+        if (location.accuracy <= 0) {
+            Log.d(LOG_TAG, "Latitidue and longitude values are invalid.")
+           // noAccuracyLocationList.add(location)
+            return false
+        }
+
+        //setAccuracy(newLocation.getAccuracy());
+        val horizontalAccuracy = location.accuracy
+        if (horizontalAccuracy > 3000) { //10meter filter
+            Log.d(LOG_TAG, "Accuracy is too low.")
+            //inaccurateLocationList.add(location)
+            return false
+        }
+
+
+        /* Kalman Filter */
+        var Qvalue: Float = 3.0f
+
+        val locationTimeInMillis = location.elapsedRealtimeNanos / 1000000
+        val elapsedTimeInMillis = locationTimeInMillis - runStartTimeInMillis
+
+        if (currentSpeed == 0.0f) {
+            Qvalue = 3.0f //3 meters per second
+        } else {
+            Qvalue = currentSpeed // meters per second
+        }
+
+        kalmanFilter.Process(location.latitude, location.longitude, location.accuracy, elapsedTimeInMillis, Qvalue)
+        val predictedLat = kalmanFilter.get_lat()
+        val predictedLng = kalmanFilter.get_lng()
+
+        val predictedLocation = Location("")//provider name is unecessary
+        predictedLocation.latitude = predictedLat//your coords of course
+        predictedLocation.longitude = predictedLng
+        val predictedDeltaInMeters = predictedLocation.distanceTo(location)
+
+        if (predictedDeltaInMeters > 60) {
+            Log.d(LOG_TAG, "Kalman Filter detects mal GPS, we should probably remove this from track")
+            kalmanFilter.consecutiveRejectCount += 1
+
+            if (kalmanFilter.consecutiveRejectCount > 3) {
+                kalmanFilter = KalmanLatLong(3f) //reset Kalman Filter if it rejects more than 3 times in raw.
+            }
+
+            //kalmanNGLocationList.add(location)
+            return false
+        } else {
+            kalmanFilter.consecutiveRejectCount = 0
+        }
+
+        /* Notifiy predicted location to UI */
+        val intent = Intent("PredictLocation")
+        intent.putExtra("location", predictedLocation)
+        LocalBroadcastManager.getInstance(this.application).sendBroadcast(intent)
+        val currentTimeInMillis = SystemClock.elapsedRealtimeNanos() / 1000000
+        Log.d(LOG_TAG, "Location quality is good enough.")
+
+        currentSpeed = location.speed
+        locationList.add(location)
+
+        return true
+    }
+
+    private fun startForeground() {
+        val channelId =
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                createNotificationChannel("my_service", "Location Tracking Service")
+            } else {
+                // If earlier version channel ID is not used
+                // https://developer.android.com/reference/android/support/v4/app/NotificationCompat.Builder.html#NotificationCompat.Builder(android.content.Context)
+                ""
+            }
+
+        val notificationBuilder = NotificationCompat.Builder(this, channelId )
+        val notification = notificationBuilder.setOngoing(true)
+            .setSmallIcon(R.mipmap.ic_launcher)
+            .setPriority(PRIORITY_MIN)
+            .setCategory(Notification.CATEGORY_SERVICE)
+            .build()
+        startForeground(101, notification)
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun createNotificationChannel(channelId: String, channelName: String): String{
+        val chan = NotificationChannel(channelId,
+            channelName, NotificationManager.IMPORTANCE_NONE)
+        chan.lightColor = Color.BLUE
+        chan.lockscreenVisibility = Notification.VISIBILITY_PRIVATE
+        val service = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        service.createNotificationChannel(chan)
+        return channelId
+    }
+
+}

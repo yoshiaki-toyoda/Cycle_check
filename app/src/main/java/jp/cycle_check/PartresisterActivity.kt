@@ -34,7 +34,7 @@ class PartresisterActivity : AppCompatActivity() {
             var cheenling = map["cheemling"] ?: ""
             var STIT = map["STIT"] ?: ""
             var shet = map["shet"] ?: ""
-
+            var shop_id = map["shop_ID"] ?: ""
             flamelText.setText(flame, TextView.BufferType.NORMAL)
             fdelayText.setText(fdelay, TextView.BufferType.NORMAL)
             ldelayText.setText(ldelay, TextView.BufferType.NORMAL)
@@ -44,6 +44,7 @@ class PartresisterActivity : AppCompatActivity() {
             cheenlingText.setText(cheenling, TextView.BufferType.NORMAL)
             STIText.setText(STIT, TextView.BufferType.NORMAL)
             shetText.setText(shet, TextView.BufferType.NORMAL)
+            shopidText.setText(shop_id, TextView.BufferType.NORMAL)
         }
 
         override fun onChildChanged(dataSnapshot: DataSnapshot, s: String?) {
@@ -83,7 +84,7 @@ class PartresisterActivity : AppCompatActivity() {
             // キーボードが出てたら閉じる
             val im = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
             im.hideSoftInputFromWindow(v.windowToken, InputMethodManager.HIDE_NOT_ALWAYS)
-            var data=HashMap<String,String>()
+            var data=HashMap<String,Any>()
             data["Flame"]=flamelText.text.toString()
             data["fdelay"]=fdelayText.text.toString()
             data["ldelay"]=ldelayText.text.toString()
@@ -93,13 +94,17 @@ class PartresisterActivity : AppCompatActivity() {
             data["cheenling"]=cheenlingText.text.toString()
             data["STIT"]=STIText.text.toString()
             data["shet"]=shetText.text.toString()
-
+            data["shop_ID"]=shopidText.text.toString()
 
 
             mAuth = FirebaseAuth.getInstance()
             val cycleRef = mDatabaseReference.child(PartPath).child(CycleUid)
             cycleRef.setValue(data)
 
+            val userRef = mDatabaseReference.child(CyclePATH).child(CycleUid)
+            var data1=HashMap<String,Any>()
+            data1.put("shop_ID", data["shop_ID"].toString())
+            userRef.updateChildren(data1)
 
 //シングルバリューリスナーにして、data→snapshotに変更し値を取る
 
@@ -123,6 +128,7 @@ class PartresisterActivity : AppCompatActivity() {
                 var cheenling = map["cheemling"] ?: ""
                 var STIT = map["STIT"] ?: ""
                 var shet = map["shet"] ?: ""
+                var shop_id=map["shop_ID"]
 
                 flamelText.setText(flame, TextView.BufferType.NORMAL)
                 fdelayText.setText(fdelay, TextView.BufferType.NORMAL)
@@ -133,7 +139,7 @@ class PartresisterActivity : AppCompatActivity() {
                 cheenlingText.setText(cheenling, TextView.BufferType.NORMAL)
                 STIText.setText(STIT, TextView.BufferType.NORMAL)
                 shetText.setText(shet, TextView.BufferType.NORMAL)
-
+                shopidText.setText(shop_id, TextView.BufferType.NORMAL)
 
             }
             override fun onCancelled(firebaseError: DatabaseError) {}

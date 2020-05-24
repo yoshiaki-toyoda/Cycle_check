@@ -11,19 +11,69 @@
     android:paddingTop="16dp"
     tools:context=".SettingActivity">
 
-    <EditText
-        android:id="@+id/nameText"
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="ユーザー名" />
+        android:text="【登録情報】"/>
 
+
+    <TextView
+        android:id="@+id/usernameTextview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="ニックネーム"
+        android:gravity="left|bottom"
+        android:textSize="12sp" />
+
+    <EditText
+        android:id="@+id/userNameText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="2"
+        android:hint="アプリ上で表示するニックネーム"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/userareaTextview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="お住まいの地域"
+        android:gravity="left|bottom"
+        android:textSize="12sp" />
+
+    <EditText
+        android:id="@+id/userereaText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="2"
+        android:hint="例：千葉県船橋市"
+        android:textSize="14sp" />
+    <TextView
+        android:id="@+id/expTextview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="サイクリング歴"
+        android:gravity="left|bottom"
+        android:textSize="12sp" />
+
+    <EditText
+        android:id="@+id/expText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="2"
+        android:hint="例：5"
+        android:inputType="number"
+        android:textSize="14sp" />
     <Button
         android:id="@+id/changeButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
         android:background="@drawable/custom_button"
-        android:text="ユーザー名変更" />
+        android:text="登録情報変更" />
 
     <Button
         android:id="@+id/logoutButton"

@@ -18,12 +18,14 @@
 
         <TextView
             android:id="@+id/emailTextview"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="メールアドレス (アカウント作成にのみ利用します)"
-            android:gravity="left|bottom"
-            android:textSize="10sp" />
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="#696969"
+            android:gravity="center_vertical"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:text="メールアドレス (アカウント作成にのみ利用します)" />
 
 
 
@@ -37,12 +39,15 @@
 
         <TextView
             android:id="@+id/passTextview"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="パスワード"
-            android:gravity="left|bottom"
-            android:textSize="10sp" />
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="#696969"
+            android:gravity="center_vertical"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:text="パスワード(6文字以上)"
+            />
 
         <EditText
             android:id="@+id/passwordText"
@@ -55,12 +60,14 @@
 
         <TextView
             android:id="@+id/usernameTextview"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="ニックネーム"
-            android:gravity="left|bottom"
-            android:textSize="10sp" />
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="#696969"
+            android:gravity="center_vertical"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:text="ニックネーム" />
 
         <EditText
             android:id="@+id/userNameText"
@@ -70,16 +77,36 @@
             android:hint="アプリ上で表示するニックネーム"
             android:textSize="14sp" />
 
+        <TextView
+            android:id="@+id/userareaTextview"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="#696969"
+            android:gravity="center_vertical"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:text="お住いの地域"
+            android:textSize="16sp" />
+
+        <EditText
+            android:id="@+id/userereaText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:hint="例：千葉県船橋市"
+            android:textSize="14sp" />
 
 
         <TextView
             android:id="@+id/sexTextview"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="性別"
-            android:gravity="left|bottom"
-            android:textSize="10sp" />
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="#696969"
+            android:gravity="center_vertical"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:text="性別" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -111,12 +138,14 @@
 
         <TextView
             android:id="@+id/oldTextview"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="生年月日"
-            android:gravity="left|bottom"
-            android:textSize="10sp" />
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="#696969"
+            android:gravity="center_vertical"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:text="生年月日" />
 
         <EditText
             android:id="@+id/ageText"
@@ -129,19 +158,21 @@
 
         <TextView
             android:id="@+id/expTextview"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="サイクリング歴"
-            android:gravity="left|bottom"
-            android:textSize="10sp" />
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="#696969"
+            android:gravity="center_vertical"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:text="サイクリング歴" />
 
         <EditText
             android:id="@+id/expText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="2"
-            android:hint="サイクリング歴"
+            android:hint="例：5"
             android:inputType="number"
             android:textSize="14sp" />
 
@@ -162,9 +193,4 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:visibility="gone"/>
-
-
-
-
-
     </RelativeLayout>

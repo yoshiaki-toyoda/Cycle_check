@@ -25,10 +25,13 @@
         <TextView
             android:id="@+id/flamelTextview"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-
-            android:text="フレーム型番"
-            android:textSize="10sp" />
+            android:layout_height="40dp"
+            android:background="#696969"
+            android:gravity="center_vertical"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:text="フレーム型番" />
 
         <EditText
             android:id="@+id/flamelText"
@@ -40,10 +43,13 @@
         <TextView
             android:id="@+id/fdelayTextview"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-
-            android:text="フロントディレイラー型番"
-            android:textSize="10sp" />
+            android:layout_height="40dp"
+            android:background="#696969"
+            android:gravity="center_vertical"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:text="フロントディレイラー型番" />
 
         <EditText
             android:id="@+id/fdelayText"
@@ -56,10 +62,14 @@
         <TextView
             android:id="@+id/ldelayTextview"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-
+            android:layout_height="40dp"
+            android:background="#696969"
+            android:gravity="center_vertical"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:textSize="18sp"
             android:text="リアディレイラー型番"
-            android:textSize="10sp" />
+            />
 
         <EditText
             android:id="@+id/ldelayText"
@@ -71,10 +81,13 @@
         <TextView
             android:id="@+id/sproketTextview"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-
-            android:text="スプロケット型番"
-            android:textSize="10sp" />
+            android:layout_height="40dp"
+            android:background="#696969"
+            android:gravity="center_vertical"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:text="スプロケット型番" />
 
         <EditText
             android:id="@+id/sproketText"
@@ -87,10 +100,14 @@
         <TextView
             android:id="@+id/wheelTextview"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
+            android:background="#696969"
+            android:gravity="center_vertical"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:textSize="18sp"
 
-            android:text="ホイール型番"
-            android:textSize="10sp" />
+            android:text="ホイール型番" />
 
         <EditText
             android:id="@+id/wheelText"
@@ -103,10 +120,14 @@
         <TextView
             android:id="@+id/TaiyaTextview"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
+            android:background="#696969"
+            android:gravity="center_vertical"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:textSize="18sp"
 
-            android:text="タイヤ型番"
-            android:textSize="10sp" />
+            android:text="タイヤ型番" />
 
         <EditText
             android:id="@+id/TaiyaText"
@@ -119,10 +140,14 @@
         <TextView
             android:id="@+id/cheenlingTextview"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
+            android:background="#696969"
+            android:gravity="center_vertical"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:textSize="18sp"
 
-            android:text="チェーンリング型番"
-            android:textSize="10sp" />
+            android:text="チェーンリング型番" />
 
         <EditText
             android:id="@+id/cheenlingText"
@@ -135,40 +160,62 @@
         <TextView
             android:id="@+id/STITextview"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-
-            android:text="STIレバー型番"
-            android:textSize="10sp" />
+            android:layout_height="40dp"
+            android:background="#696969"
+            android:gravity="center_vertical"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:text="STIレバー型番" />
 
         <EditText
             android:id="@+id/STIText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-
             android:hint="STIレバー型番"
             android:textSize="18sp" />
 
         <TextView
-        android:id="@+id/shetTextview"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-
-        android:text="サドル型番"
-        android:textSize="10sp" />
+            android:id="@+id/shetTextview"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="#696969"
+            android:gravity="center_vertical"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:text="サドル型番" />
 
         <EditText
             android:id="@+id/shetText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-
             android:hint="サドル型番"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/shopTextview"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="#696969"
+            android:gravity="center_vertical"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:text="登録店" />
+
+        <EditText
+            android:id="@+id/shopidText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="登録店"
             android:textSize="18sp" />
 
         <Button
             android:id="@+id/partbutton1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-
+            android:inputType="number"
             android:text="登録内容変更" />
 
     </LinearLayout>

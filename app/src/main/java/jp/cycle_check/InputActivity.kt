@@ -112,6 +112,13 @@ class InputActivity : AppCompatActivity() {
 
         realm.close()
 
+        //test
+        button.setOnClickListener{v: View? ->
+            val intent = Intent(applicationContext, GpsActivity::class.java)
+            startActivity(intent)
+        }
+
+
         //初期入力
 
         if (mTask == null) {
@@ -150,8 +157,6 @@ class InputActivity : AppCompatActivity() {
             times_button.text = timeString
 
         }
-
-
     }
 
     private fun addTask() {
@@ -196,4 +201,6 @@ class InputActivity : AppCompatActivity() {
         realm.close()
 
     }
+
+
 }

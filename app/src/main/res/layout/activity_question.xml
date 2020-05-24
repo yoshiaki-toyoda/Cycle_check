@@ -1,0 +1,458 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".QuestionActivity">
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        tools:ignore="MissingConstraints">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?attr/colorPrimary" />
+
+        <TextView
+        android:id="@+id/cycle_nameonlyText"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="#696969"
+        android:gravity="center_vertical"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        android:text="写真"
+        android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/image2Text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:text="登録画像(クリックで変更)"
+            android:textSize="12sp" />
+
+        <ImageView
+            android:id="@+id/imageView4"
+            android:layout_width="match_parent"
+            android:layout_height="310dp"
+            android:layout_weight="2"
+            android:scaleType="fitCenter"
+            app:srcCompat="@android:color/darker_gray" />
+        <TextView
+            android:id="@+id/cycle_nameinfoText"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="#696969"
+            android:gravity="center_vertical"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:text="質問者情報"
+            android:textSize="18sp" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="220dp"
+                android:layout_weight="4"
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/user_name1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:text="ユーザー名"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/area_name1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:text="地域"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/cycle_name1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:text="自転車名"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/shopText1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:text="登録店"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/disText1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:text="走行距離"
+                    android:textSize="16sp" />
+                <TextView
+                    android:id="@+id/dayText1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:text="レポート作成日"
+                    android:gravity="center_horizontal"
+                    android:textSize="16sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="220dp"
+                android:layout_weight="2"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/user_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:text="ユーザー名"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/area_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:text="地域"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/cycle_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:text="自転車名"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/shopText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:text="登録店"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/disText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:text="走行距離"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/dayText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:text="レポート作成日"
+                    android:gravity="center_horizontal"
+                    android:textSize="16sp" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/reportcontents"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="#696969"
+            android:gravity="center_vertical"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:text="レポート内容"
+            android:textSize="16sp" />
+
+        <RadioGroup
+            android:id="@+id/group1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+                <RadioButton
+                    android:id="@+id/defect"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:text="不具合相談"
+                    android:textSize="12sp" />
+
+            <RadioButton
+                android:id="@+id/update"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:text="アップグレード(部品交換)相談"
+                android:textSize="12sp" />
+
+            <RadioButton
+                android:id="@+id/mitsumori"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:text="見積相談"
+                android:textSize="12sp" />
+
+            <RadioButton
+                android:id="@+id/other"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:text="その他相談"
+                android:textSize="12sp" />
+
+        </RadioGroup>
+
+
+
+        <TextView
+            android:id="@+id/part_name"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="#696969"
+            android:gravity="center_vertical"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:text="相談部位"
+            android:layout_weight="2"
+            android:textSize="16sp" />
+
+        <Spinner
+            android:id="@+id/spinner"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_margin="20dp"
+            android:background="#fff" />
+
+            <TextView
+                android:id="@+id/title_edit"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="#696969"
+                android:gravity="center_vertical"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:text="レポートタイトル"
+                android:layout_weight="4"
+                android:textSize="16sp" />
+
+        <EditText
+            android:id="@+id/Titile_ditail"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:gravity="top|left"
+            android:hint="タイトル入力"
+            android:layout_weight="1"
+            android:textSize="16sp" />
+
+
+
+        <TextView
+            android:id="@+id/problem_ditail"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="#696969"
+            android:gravity="center_vertical"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:text="解決したい問題"
+            android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/problem_edit"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:layout_weight="1"
+                android:gravity="top|left"
+                android:hint=""
+                android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/reportAnser"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="#696969"
+            android:gravity="center_vertical"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:text="希望回答タイプ"
+            android:textSize="16sp" />
+
+        <RadioGroup
+            android:id="@+id/group2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+                <RadioButton
+                    android:id="@+id/perform"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:text="性能重視"
+                    android:textSize="12sp" />
+
+                <RadioButton
+                    android:id="@+id/cospa"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:text="コスパ重視"
+                    android:textSize="12sp" />
+
+
+
+                <RadioButton
+                    android:id="@+id/otherchoise"
+                    android:layout_width="155dp"
+                    android:layout_height="40dp"
+                    android:layout_weight="2"
+                    android:text="その他"
+                    android:textSize="12sp" />
+
+                <EditText
+                    android:id="@+id/type_otheredit"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_weight="2"
+                    android:hint="その他希望入力"
+                    android:gravity="top|left"
+                    android:textSize="12sp" />
+
+
+        </RadioGroup>
+
+        <TextView
+            android:id="@+id/yosantext"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="#696969"
+            android:gravity="center_vertical"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:text="解決希望予算 ※部品交換時"
+            android:textSize="16sp" />
+
+        <EditText
+            android:id="@+id/yosan_edit"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:hint="例1：4万円程度～最高10万円等,例2:メンテ方法相談のみ"
+            android:textSize="14sp" />
+        <TextView
+            android:id="@+id/bottum1text"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="#696969"
+            android:gravity="center_vertical"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:text="中古部品の可否"
+            android:textSize="16sp" />
+
+        <RadioGroup
+            android:id="@+id/group3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+
+
+                <RadioButton
+                    android:id="@+id/oldpart_yes"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:text="中古部品可"
+                    android:textSize="12sp" />
+
+                <RadioButton
+                    android:id="@+id/oldpart_no"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:text="中古部品不可"
+                    android:textSize="12sp" />
+
+        </RadioGroup>
+
+        <TextView
+            android:id="@+id/comtext"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="#696969"
+            android:gravity="center_vertical"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:text="コメント"
+            android:textSize="16sp" />
+
+        <EditText
+            android:id="@+id/com_edit"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:gravity="top|left"
+            android:hint="例1：交換は自分でできますので、予算に合う部品を何点か見繕っていただけると助かります"
+            android:textSize="12sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_weight="2"
+            android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/resisterbutton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:text="レポート確定" />
+
+            <Button
+                android:id="@+id/answer_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:text="回答確認" />
+
+
+        </LinearLayout>
+        <Button
+            android:id="@+id/finishbutton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:text="回答締め切り" />
+    </LinearLayout>
+
+
+
+
+    </ScrollView>
+</androidx.core.widget.NestedScrollView>

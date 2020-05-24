@@ -1,13 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    >
-    <com.github.mikephil.charting.charts.BarChart
+    android:orientation="vertical">
+    <TextView
+        android:id="@+id/cycle_nameonlyText"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="#696969"
+        android:gravity="center_vertical"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        android:text="走行実績[走行距離/平均速度]"
+        android:textSize="18sp" />
+
+    <com.github.mikephil.charting.charts.CombinedChart
         android:id="@+id/bar_chart"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:layout_weight="1" />
 
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="3"
+        android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/total_aveText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="14dp" />
+
+
+
+    </LinearLayout>
 </LinearLayout>
 

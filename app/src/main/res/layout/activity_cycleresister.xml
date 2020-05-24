@@ -35,19 +35,31 @@
             android:layout_height="62dp"
             android:hint="ロードバイク名を入力"
             android:layout_weight="2"/>
+        <TextView
+            android:id="@+id/typenameText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="タイプ"
+            android:layout_weight="2"/>
+        <Spinner
+            android:id="@+id/spinner"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_margin="20dp"
+            android:background="#fff" />
 
         <EditText
             android:id="@+id/resistershopText"
             android:layout_width="match_parent"
-            android:layout_height="62dp"
-            android:hint="店舗番号を入力"
+            android:layout_height="wrap_content"
+            android:hint="店舗番号を入力\n(購入店が本アプリ対象外の場合、0000を入力)"
             android:layout_weight="2"/>
 
         <ProgressBar
             android:id="@+id/progressBar"
             style="?android:attr/progressBarStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:layout_centerInParent="true"
             android:visibility="gone" />
 

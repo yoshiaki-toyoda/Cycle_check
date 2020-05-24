@@ -5,6 +5,7 @@ import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.github.mikephil.charting.animation.Easing
+import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.formatter.PercentFormatter
 import java.util.Arrays.asList
 import com.github.mikephil.charting.utils.ColorTemplate
@@ -14,11 +15,36 @@ import com.github.mikephil.charting.data.*
 import com.github.mikephil.charting.formatter.IValueFormatter
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
 import com.github.mikephil.charting.interfaces.datasets.IBarDataSet
+import com.github.mikephil.charting.interfaces.datasets.ILineDataSet
 import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.activity_distance_grap.*
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
+import com.github.mikephil.charting.data.CombinedData
+
+import androidx.core.content.ContextCompat.getSystemService
+import android.icu.lang.UCharacter.GraphemeClusterBreak.T
+import androidx.core.content.ContextCompat.getSystemService
+import android.icu.lang.UCharacter.GraphemeClusterBreak.T
+
+import androidx.core.content.ContextCompat.getSystemService
+import android.icu.lang.UCharacter.GraphemeClusterBreak.T
+import com.github.mikephil.charting.components.XAxis.XAxisPosition
+import com.github.mikephil.charting.components.YAxis
+
+import androidx.core.content.ContextCompat.getSystemService
+import android.icu.lang.UCharacter.GraphemeClusterBreak.T
+
+import androidx.core.content.ContextCompat.getSystemService
+import android.icu.lang.UCharacter.GraphemeClusterBreak.T
+
+import androidx.core.content.ContextCompat.getSystemService
+import android.icu.lang.UCharacter.GraphemeClusterBreak.T
+
+import androidx.core.content.ContextCompat.getSystemService
+import android.icu.lang.UCharacter.GraphemeClusterBreak.T
+import kotlinx.android.synthetic.main.activity_resister.*
 
 
 class DistanceGrapActivity : AppCompatActivity() {
@@ -31,13 +57,41 @@ class DistanceGrapActivity : AppCompatActivity() {
     var cycle_uid:String=""
     var datelist=ArrayList<String>()
     var avespeed=ArrayList<String>()
+    var total_ave:Int=0
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_distance_grap)
 
+        val chart = bar_chart
+        chart.getDescription().setEnabled(false)
+        chart.setBackgroundColor(Color.WHITE)
+        chart.setDrawGridBackground(false)
+        chart.setDrawBarShadow(false)
+        chart.setHighlightFullBarEnabled(false)
+        chart.legend.isEnabled = true
+
+        val l = chart.legend
+        l.isWordWrapEnabled = true
+        l.verticalAlignment = Legend.LegendVerticalAlignment.BOTTOM
+        l.horizontalAlignment = Legend.LegendHorizontalAlignment.CENTER
+        l.orientation = Legend.LegendOrientation.HORIZONTAL
+        l.setDrawInside(false)
+
+        val rightAxis = chart.axisRight
+        rightAxis.setDrawGridLines(false)
+        rightAxis.axisMinimum = 0f // this replaces setStartAtZero(true)
+        rightAxis.textSize=16f
+
+        val leftAxis = chart.axisLeft
+        leftAxis.setDrawGridLines(false)
+        leftAxis.axisMinimum = 0f // this replaces setStartAtZero(true)
+        leftAxis.textSize=16f
+
         //グラフ用データ取得
         lisner()
+
 }
 
 
@@ -60,7 +114,11 @@ class DistanceGrapActivity : AppCompatActivity() {
                         if(m=="time"){
                             timelist.add(n.toString())
                         }else if(m=="date"){
-                            datelist.add(n.toString())
+                            val df = SimpleDateFormat("yyyy/MM/dd")
+                            val dt=df.parse(n.toString()!!)
+                            val df2=SimpleDateFormat("MM/dd")
+                            val date=df2.format(dt)
+                            datelist.add(date.toString())
                         }else if(m=="distance"){
                             dislist.add(n.toString().toInt())
                         }
@@ -75,66 +133,67 @@ class DistanceGrapActivity : AppCompatActivity() {
                     var min=timelist[i].substring(3,5)
                     var ridetime= ((hour.toString().toInt()*60+min.toString().toInt())/60).toInt().toFloat()
                     var speed:Float =dislist[i]/ridetime
-                    avespeed.add(("%,.2f".format(speed)).toString())
+                    avespeed.add(("%,.1f".format(speed)).toString())
                 }
-
-
-
                 chart()
             }
             override fun onCancelled(p0: DatabaseError) {
                 TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
             }
-
         })
-
     }
 
     fun chart() {
         val chart = bar_chart
+        val data = CombinedData()
         //表示データ取得
-        chart.data = BarData(getBarData() as List<IBarDataSet>?)
+         data.setData(getLineData())
+         data.setData(getBarData())
 
-        //Y軸(左)の設定
-        chart.axisLeft.apply {
-            axisMinimum = 0f
-            axisMaximum = 150f
-            labelCount = 5
-            setDrawTopYLabelEntry(true)
-            setValueFormatter { value, axis -> "" + value.toInt()}
-        }
-
-        //Y軸(右)の設定
-        chart.axisRight.apply {
-            setDrawLabels(false)
-            setDrawGridLines(false)
-            setDrawZeroLine(false)
-            setDrawTopYLabelEntry(true)
-        }
+        chart.xAxis.setAxisMaximum(data.getXMax() + 0.5f)
+        chart.xAxis.setAxisMinimum(data.getXMin() - 0.5f)
+        chart.xAxis.textSize=15f
+        chart.setExtraOffsets(0f,0f,20f,12f)
+        chart.axisRight.textSize=15f
+        chart.axisLeft.textSize=15f
+        chart.setData(data)
+        chart.setVisibleXRangeMaximum(6f)
 
         //X軸の設定
         val labels = datelist //最初の””は原点の値
-        val datesize=datelist.size
+        val datesize=datelist.size.toFloat()
         chart.xAxis.apply {
+
             valueFormatter = IndexAxisValueFormatter(labels)
-            labelCount = datesize //表示させるラベル数
             position = XAxis.XAxisPosition.BOTTOM
             setDrawLabels(true)
+            textSize=16f
             setDrawGridLines(false)
             setDrawAxisLine(true)
+            setAxisMinimum(-0.5f)
+            setGranularity(1f)
+        }
+        chart.axisLeft.apply {
+            textSize=16f
         }
 
+        chart.axisRight.apply {
+            textSize=16f
+        }
         //グラフ上の表示
         chart.apply {
             setDrawValueAboveBar(true)
             description.isEnabled = false
             isClickable = false
-            legend.isEnabled = false //凡例
             setScaleEnabled(false)
             animateY(1200, Easing.EasingOption.Linear)
         }
+
+
+
+        chart.invalidate()
     }
-    private fun getBarData(): ArrayList<IBarDataSet> {
+    private fun getBarData(): BarData {
         //表示させるデータ
         val entries1 = ArrayList<BarEntry>().apply {
             var x :Float=0f
@@ -150,7 +209,24 @@ class DistanceGrapActivity : AppCompatActivity() {
 
         }
 
-        val entries2 = ArrayList<BarEntry>().apply {
+        val dataSet1 = BarDataSet(entries1, "走行距離[Km]").apply {
+            //整数で表示
+            valueFormatter = IValueFormatter { value, _, _, _ -> "" + value.toInt() }
+            //ハイライトさせない
+            isHighlightEnabled = true
+            setStackLabels(arrayOf("Ave Speed"))
+            setColors(Color.rgb(61, 165, 255))
+            setValueTextColor(Color.rgb(61, 165, 255))
+            setValueTextSize(15f)
+            setAxisDependency(YAxis.AxisDependency.LEFT)
+        }
+
+        var bars=BarData(dataSet1)
+        return bars
+    }
+
+    private fun getLineData(): LineData {
+        val entries2 = ArrayList<Entry>().apply {
             var x :Float=0f
             var ave:Float=0f
             var i:Float=0f
@@ -163,32 +239,25 @@ class DistanceGrapActivity : AppCompatActivity() {
             }
 
         }
-
-        val dataSet1 = BarDataSet(entries1, "bar").apply {
-            //整数で表示
-            valueFormatter = IValueFormatter { value, _, _, _ -> "" + value.toInt() }
+        val dataSet2 = LineDataSet(entries2, "Ave Speed[Km/h]").apply {
+            valueFormatter = IValueFormatter { value, _, _, _ -> "" + value.toFloat() }
             //ハイライトさせない
-            isHighlightEnabled = false
-            //Barの色をセット
-            setColors(intArrayOf(R.color.material_blue, R.color.material_green, R.color.material_yellow), this@DistanceGrapActivity)
+            isHighlightEnabled = true
+            setColor(Color.rgb(240, 238, 70));
+            setLineWidth(2.5f);
+            setCircleColor(Color.rgb(240, 238, 70));
+            setCircleRadius(5f);
+            setFillColor(Color.rgb(240, 238, 70));
+            setMode(LineDataSet.Mode.CUBIC_BEZIER);
+            setDrawValues(true);
+            setValueTextSize(15f);
+            setValueTextColor(Color.rgb(240, 238, 70));
+            setAxisDependency(YAxis.AxisDependency.RIGHT)
         }
 
-        val dataSet2 = BarDataSet(entries2, "bar").apply {
-            //整数で表示
-            valueFormatter = IValueFormatter { value, _, _, _ -> "" + value.toInt() }
-            //ハイライトさせない
-            isHighlightEnabled = false
-            //Barの色をセット
-            setColors(intArrayOf(R.color.material_blue, R.color.material_green, R.color.material_yellow), this@DistanceGrapActivity)
-        }
+        var bars2=LineData(dataSet2)
+        return bars2
 
-
-
-        val bars = ArrayList<IBarDataSet>()
-        bars.add(dataSet1)
-        bars.add(dataSet2)
-        return bars
     }
-
 
 }

@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="16dp"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp"
+    android:paddingTop="16dp">
+
+    <ScrollView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".CycleresisterActivity">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/flamelTextview"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="#696969"
+                android:gravity="center_vertical"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:text="フレーム型番" />
+
+            <EditText
+                android:id="@+id/flamelText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="フレーム型番"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/fdelayTextview"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="#696969"
+                android:gravity="center_vertical"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:text="フロントディレイラー型番" />
+
+            <EditText
+                android:id="@+id/fdelayText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:hint="フロントディレイラー型番"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/ldelayTextview"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="#696969"
+                android:gravity="center_vertical"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:text="リアディレイラー型番"
+               />
+
+            <EditText
+                android:id="@+id/ldelayText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:hint="リアディレイラー型番"
+                android:textSize="18sp" />
+            <TextView
+                android:id="@+id/sproketTextview"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="#696969"
+                android:gravity="center_vertical"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:text="スプロケット型番" />
+
+            <EditText
+                android:id="@+id/sproketText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:hint="スプロケット型番"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/wheelTextview"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="#696969"
+                android:gravity="center_vertical"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:textSize="18sp"
+
+                android:text="ホイール型番" />
+
+            <EditText
+                android:id="@+id/wheelText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:hint="ホイール型番"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/TaiyaTextview"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="#696969"
+                android:gravity="center_vertical"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:textSize="18sp"
+
+                android:text="タイヤ型番" />
+
+            <EditText
+                android:id="@+id/TaiyaText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:hint="タイヤ型番"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/cheenlingTextview"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="#696969"
+                android:gravity="center_vertical"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:textSize="18sp"
+
+                android:text="チェーンリング型番" />
+
+            <EditText
+                android:id="@+id/cheenlingText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:hint="チェーンリング型番"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/STITextview"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="#696969"
+                android:gravity="center_vertical"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:text="STIレバー型番" />
+
+            <EditText
+                android:id="@+id/STIText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="STIレバー型番"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/shetTextview"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="#696969"
+                android:gravity="center_vertical"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:text="サドル型番" />
+
+            <EditText
+                android:id="@+id/shetText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="サドル型番"
+                android:textSize="18sp" />
+
+        </LinearLayout>
+
+    </ScrollView>
+</RelativeLayout>

@@ -10,61 +10,82 @@ import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.ImageView
 import android.widget.TextView
-
-import java.util.ArrayList
+import java.text.SimpleDateFormat
+import java.util.*
 
 class CycleListAdapter(context: Context) : BaseAdapter(){
     private var mLayoutInflater: LayoutInflater
     private var mCycleinfoArrayList = ArrayList<Cycleinfo>()
+    private var vCycleinfoArrayList=ArrayList<Questioninfo>()
 
     init {
         mLayoutInflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
     }
 
     override fun getCount(): Int {
-        return mCycleinfoArrayList.size
+            return mCycleinfoArrayList.size
+            return vCycleinfoArrayList.size
+
+
     }
 
     override fun getItem(position: Int): Any {
         return mCycleinfoArrayList[position]
+        return vCycleinfoArrayList[position]
     }
 
     override fun getItemId(position: Int): Long {
         return position.toLong()
     }
 
-    override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
+    override fun getView(position: Int, convertView: View?, parent: ViewGroup): View? {
         var convertView = convertView
 
         if (convertView == null) {
             convertView = mLayoutInflater.inflate(R.layout.list_cycle, parent, false)
         }
 
-        val titleText = convertView!!.findViewById<View>(R.id.titleTextView) as TextView
-        titleText.text = mCycleinfoArrayList[position].cycle_name
+        if(mCycleinfoArrayList!==null) {
 
-        val nameText = convertView.findViewById<View>(R.id.nameTextView) as TextView
-        // Preferenceから表示名を取得してEditTextに反映させる
 
-        nameText.text = "ユーザー名:\n" +mCycleinfoArrayList[position].name
+            val titleText = convertView!!.findViewById<View>(R.id.titleTextView) as TextView
+            titleText.text ="名称"+ mCycleinfoArrayList[position].cycle_name
 
-        val resText = convertView.findViewById<View>(R.id.resTextView) as TextView
-        resText.text ="走行距離："+mCycleinfoArrayList[position].distance+"Km"
+            val nameText = convertView.findViewById<View>(R.id.nameTextView) as TextView
+            nameText.text = "ユーザー名:" + mCycleinfoArrayList[position].name
 
-        val reportText = convertView.findViewById<View>(R.id.ReportTextView) as TextView
-        reportText.text = "購入店："+mCycleinfoArrayList[position].shop_ID
+            val resText = convertView.findViewById<View>(R.id.resTextView) as TextView
+            resText.text = "走行距離：" + mCycleinfoArrayList[position].distance + "Km"
 
-        val bytes =mCycleinfoArrayList[position].imageBytes
-        if (bytes.isNotEmpty()) {
-            val image = BitmapFactory.decodeByteArray(bytes, 0, bytes.size).copy(Bitmap.Config.ARGB_8888, true)
-            val imageView = convertView.findViewById<View>(R.id.imageView2) as ImageView
-            imageView.setImageBitmap(image)
+            val shopText = convertView.findViewById<View>(R.id.ReportTextView) as TextView
+            shopText.text = "登録店："+mCycleinfoArrayList[position].shop_ID
+
+            val dateText = convertView.findViewById<View>(R.id.ReportdayTextView) as TextView
+            dateText.text="登録日:"+mCycleinfoArrayList[position].date
+
+            val typeText = convertView.findViewById<View>(R.id.TypeTextView) as TextView
+            typeText.text="タイプ:"+mCycleinfoArrayList[position].type
+
+
+            val bytes = mCycleinfoArrayList[position].imageBytes
+            if (bytes.isNotEmpty()) {
+                val image = BitmapFactory.decodeByteArray(bytes, 0, bytes.size)
+                    .copy(Bitmap.Config.ARGB_8888, true)
+                val imageView = convertView.findViewById<View>(R.id.imageView2) as ImageView
+                imageView.setImageBitmap(image)
+            }
+
+
         }
 
         return convertView
     }
-
-    fun setQuestionArrayList(cycleArrayList: ArrayList<Cycleinfo>) {
+    fun setCycleArrayList(cycleArrayList: ArrayList<Cycleinfo>) {
         mCycleinfoArrayList= cycleArrayList
+    }
+    fun getNowDate(): String {
+        val df = SimpleDateFormat("yyyy/MM/dd HH:mm:ss")
+        val date = Date(System.currentTimeMillis())
+        return df.format(date)
     }
 }

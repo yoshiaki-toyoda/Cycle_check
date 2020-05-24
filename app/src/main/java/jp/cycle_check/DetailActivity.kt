@@ -5,6 +5,7 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.ContentValues
 import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
@@ -20,6 +21,7 @@ import android.provider.MediaStore
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Base64
+import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.inputmethod.InputMethodManager
@@ -74,7 +76,7 @@ class DetailActivity : AppCompatActivity(), View.OnClickListener, DatabaseRefere
 
         var cuid = mCycle.cycleUid//ユーザーuid
         var cycname=mCycle.cycle_name
-        var ctitle = mCycle.name//ユーザー名
+        var username = mCycle.name//ユーザー名
         var shopid = mCycle.shop_ID//購入店
         var com = mCycle.com//コメント
         var dis = mCycle.distance//　走行距離
@@ -84,9 +86,9 @@ class DetailActivity : AppCompatActivity(), View.OnClickListener, DatabaseRefere
         //取得したデータを画面に配置
 
         cyclenameText.setText(cycname, TextView.BufferType.NORMAL)
-        shopText.text = "Shop Id:"+shopid
+        shopText.text = shopid
         comText2.setText(com, TextView.BufferType.NORMAL)
-        disText.text = "走行距離："+ dis +"Km"
+        disText.text =  dis +"Km"
 
         if (bytes.isNotEmpty()) {
             val image = BitmapFactory.decodeByteArray(bytes, 0, bytes.size)
@@ -126,9 +128,45 @@ class DetailActivity : AppCompatActivity(), View.OnClickListener, DatabaseRefere
 
         }
 
+        confirmbutton.setOnClickListener{v ->
+            val im = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            im.hideSoftInputFromWindow(v.windowToken, InputMethodManager.HIDE_NOT_ALWAYS)
+            val intent = Intent(applicationContext, QuestionActivity::class.java)
+            intent.putExtra("cycleinfo",mCycle)
+            startActivity(intent)
+        }
+        allconfirmbutton.setOnClickListener{v ->
+            val im = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            im.hideSoftInputFromWindow(v.windowToken, InputMethodManager.HIDE_NOT_ALWAYS)
+            val intent = Intent(applicationContext, QuestionAllActivity::class.java)
+            intent.putExtra("cycleinfo",mCycle)
+            startActivity(intent)
+        }
+
+        cyclenameText.setOnKeyListener { v, keyCode, event ->
+            if (event.getAction() == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_ENTER) {
+                val im = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                im.hideSoftInputFromWindow(v.windowToken, InputMethodManager.HIDE_NOT_ALWAYS)
+               update()
+                true
+            } else {
+                false
+            }
+        }
+
+        comText2.setOnKeyListener { v, keyCode, event ->
+            if (event.getAction() == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_ENTER) {
+                update()
+                true
+            } else {
+                false
+            }
+        }
 
 
-
+        cyclenameText.isFocusableInTouchMode = true
+        cyclenameText.requestFocus()
+/*
         compbutton.setOnClickListener { v -> //変更確定ボタン押下時の処理
             // キーボードが出てたら閉じる
             val im = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
@@ -164,7 +202,7 @@ class DetailActivity : AppCompatActivity(), View.OnClickListener, DatabaseRefere
             finish()
 
         }
-
+*/
 
     }
     @SuppressLint("MissingSuperCall")
@@ -241,7 +279,7 @@ class DetailActivity : AppCompatActivity(), View.OnClickListener, DatabaseRefere
 
             val dataBaseReference = FirebaseDatabase.getInstance().reference
             val genreRef = dataBaseReference.child(CyclePATH)
-            val data = java.util.HashMap<String, String>()
+            val data = java.util.HashMap<String, Any>()
 
             data["uid"] = FirebaseAuth.getInstance().currentUser!!.uid// UID
 
@@ -254,11 +292,15 @@ class DetailActivity : AppCompatActivity(), View.OnClickListener, DatabaseRefere
                 val baos = ByteArrayOutputStream()
                 bitmap.compress(Bitmap.CompressFormat.JPEG, 80, baos)
                 val bitmapString = Base64.encodeToString(baos.toByteArray(), Base64.DEFAULT)
-
+                val cycleRef = mDatabaseReference.child(CyclePATH).child(mCycle.cycleUid)
                 data["image"] = bitmapString
+
+                data.put("image",bitmapString)
+                cycleRef.updateChildren(data)
+
             }
 
-            genreRef.push().setValue(data, this)
+
 
 
 
@@ -310,4 +352,27 @@ class DetailActivity : AppCompatActivity(), View.OnClickListener, DatabaseRefere
             Snackbar.make(findViewById(android.R.id.content), "投稿に失敗しました", Snackbar.LENGTH_LONG).show()
         }
     }
+
+    fun update(){
+
+        var data = HashMap<String, Any>() // 添付画像を取得する
+        // Preferenceから表示名を取得してEditTextに反映させる
+        val sp = PreferenceManager.getDefaultSharedPreferences(this)
+        val name = sp.getString(NameKEY, "")
+
+        mAuth = FirebaseAuth.getInstance()
+        val cycleRef = mDatabaseReference.child(CyclePATH).child(mCycle.cycleUid)
+        data.put("com",comText2.text.toString())
+        data.put("cycle_name", cyclenameText.text.toString())
+        cycleRef.updateChildren(data)
+
+
+
+
+        finish()
+
+    }
+
+
+
 }

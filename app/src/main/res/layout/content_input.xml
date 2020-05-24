@@ -154,6 +154,12 @@
             android:layout_below="@id/times_button"
             android:layout_alignParentRight="true"
             android:text="走行記録確定" />
+
+        <Button
+            android:id="@+id/button"
+            android:text="Button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
     </LinearLayout>
 
 </RelativeLayout>

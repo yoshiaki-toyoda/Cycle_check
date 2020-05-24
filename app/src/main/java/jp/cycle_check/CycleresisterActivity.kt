@@ -18,6 +18,9 @@ import android.provider.MediaStore
 import android.util.Base64
 import android.view.View
 import android.view.inputmethod.InputMethodManager
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import android.widget.Spinner
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.snackbar.Snackbar
 
@@ -35,7 +38,8 @@ class CycleresisterActivity : AppCompatActivity(), View.OnClickListener, Databas
     private val PERMISSIONS_REQUEST_CODE = 100
     private val CHOOSER_REQUEST_CODE = 100
     private var mPictureUri: Uri? = null
-
+    var type=""
+    private val spinnerItems= arrayListOf<String>("ロードバイク","マウンテンバイク","クロスバイク","しクロスバイク","ピストバイク","ミニベロ","シティサイクル","その他")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_cycleresister)
@@ -43,6 +47,36 @@ class CycleresisterActivity : AppCompatActivity(), View.OnClickListener, Databas
         //各ボタンのリスナーを設定
         cycleresisterbutton.setOnClickListener(this)
         imageView2.setOnClickListener(this)
+
+
+
+        //ドロップリスト設定
+        val spinner = findViewById<Spinner>(R.id.spinner)
+        val index=spinnerItems.binarySearch(type)
+        spinner.setSelection(index)
+        val adapter = ArrayAdapter(applicationContext,
+            android.R.layout.simple_spinner_item, spinnerItems)
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        spinner.setPrompt("車両タイプ")
+        // spinner に adapter をセット
+        // Kotlin Android Extensions
+
+        spinner.adapter = adapter
+        // リスナーを登録
+        spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+            //　アイテムが選択された時
+            override fun onItemSelected(parent: AdapterView<*>?,
+                                        view: View?, position: Int, id: Long) {
+                val spinnerParent = parent as Spinner
+                val item = spinnerParent.selectedItem as String
+                type=item
+            }
+
+            //　アイテムが選択されなかった
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                return
+            }
+        }
     }
 
     @SuppressLint("MissingSuperCall")
@@ -122,6 +156,7 @@ class CycleresisterActivity : AppCompatActivity(), View.OnClickListener, Databas
             // タイトルと本文を取得する
             val cycle_name = resisternameText.text.toString()
             val shop_code = resistershopText.text.toString()
+            val type=spinner
 
             if (cycle_name.isEmpty()) {
                 // タイトルが入力されていない時はエラーを表示するだけ
@@ -141,6 +176,7 @@ class CycleresisterActivity : AppCompatActivity(), View.OnClickListener, Databas
             data["cycle_name"]=cycle_name
             data["shop_ID"]=shop_code
             data["name"]=name
+            data["type"]=type.toString()
 
             // 添付画像を取得する
             val drawable = imageView2.drawable as? BitmapDrawable

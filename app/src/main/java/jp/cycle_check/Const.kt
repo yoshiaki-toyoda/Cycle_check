@@ -13,7 +13,7 @@ const val MailKEY = "email"
 const val PassKEY = "pass"
 const val AveSpeed="avesp"
 const val AveaAccel="aveac"
-
+const val AreaKEY = "area"
 const val AgeKey="age"
 const val SexKey="sex"
 const val ExpKey="exp"

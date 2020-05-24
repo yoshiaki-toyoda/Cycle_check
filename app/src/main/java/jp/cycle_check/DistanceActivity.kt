@@ -31,17 +31,17 @@ import com.google.firebase.database.FirebaseDatabase
 
 import android.app.AlertDialog
 import android.app.PendingIntent
+import com.google.android.material.snackbar.Snackbar
 
 import com.google.firebase.database.*
 import io.realm.Realm
 import io.realm.RealmChangeListener
 import io.realm.Sort
 import kotlinx.android.synthetic.main.activity_distance.*
-
+import java.text.SimpleDateFormat
+import java.util.HashMap
 
 const val EXTRA_TASK = "jp.cycleapp.Cycle"
-
-
 class DistanceActivity : AppCompatActivity() {
     private lateinit var mRealm: Realm
     private lateinit var sinfo:java.util.HashMap<Any,Any>
@@ -57,12 +57,10 @@ class DistanceActivity : AppCompatActivity() {
 
     private val mRealmListener = object : RealmChangeListener<Realm> {
         override fun onChange(element: Realm) {
-
         }
     }
 
     private lateinit var mTaskAdapter: DisAdapter
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_distance)
@@ -80,12 +78,14 @@ class DistanceActivity : AppCompatActivity() {
         }
 
         cycledisbutton.setOnClickListener { view ->
-            val intent = Intent(this@DistanceActivity,DistanceGrapActivity::class.java)
-            intent.putExtra("cyclename", cycle)
-            intent.putExtra("cycle_uid", cycle_uid)
-            startActivity(intent)
-            reloadListView()
-
+            if (mTaskAdapter!==null) {
+                val intent = Intent(this@DistanceActivity, DistanceGrapActivity::class.java)
+                intent.putExtra("cyclename", cycle)
+                intent.putExtra("cycle_uid", cycle_uid)
+                startActivity(intent)
+                reloadListView()
+            }
+            Snackbar.make(view, "走行記録がありません", Snackbar.LENGTH_LONG).show()
         }
 
 
@@ -158,7 +158,7 @@ class DistanceActivity : AppCompatActivity() {
         listView1.adapter = mTaskAdapter
         // 表示を更新するために、アダプターにデータが変更されたことを知らせる
         mTaskAdapter.notifyDataSetChanged()
-
+        lisner()
 
     }
 
@@ -167,7 +167,45 @@ class DistanceActivity : AppCompatActivity() {
 
         mRealm.close()
     }
-        }
+    fun lisner(){
+
+        var totaldis:Int=0
+        mDatabaseReference = FirebaseDatabase.getInstance().reference
+        vCycleRef = mDatabaseReference.child(RidePath).child(cycle_uid)
+        vCycleRef!!.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                var map = snapshot.value as HashMap<String, HashMap<Any, Any>>
+                var sinfo = java.util.HashMap<Any, Any>()
+                var count: Int = 0
+
+                for ((k, v: HashMap<Any, Any>) in map.toSortedMap()) {
+                    for ((j, l) in v) {
+                        sinfo[j] = l
+                    }
+                    for((m,n) in sinfo){
+                        if(m=="distance"){
+                            totaldis=totaldis+n.toString().toInt()
+                        }
+                    }
+                    count = count + 1
+                    sinfo.clear()
+                }
+                val mCycleRef = mDatabaseReference.child(CyclePATH).child(cycle_uid)
+                val dataC = HashMap<String, Any>()
+                dataC.put("distance",totaldis.toString())
+                mCycleRef.updateChildren(dataC)
+                //distanceだけ変える
+            }
+            override fun onCancelled(p0: DatabaseError) {
+                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+            }
+
+        })
+
+    }
+
+
+}
 
 
 

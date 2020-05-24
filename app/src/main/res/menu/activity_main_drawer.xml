@@ -10,10 +10,10 @@
             android:title="皆のバイク"/>
         <item
             android:id="@+id/nav_shop"
-            android:title="Shop掲示板"/>
+            android:title="質問一覧"/>
         <item
             android:id="@+id/nav_board"
-            android:title="みんなの掲示板"/>
+            android:title="回答一覧"/>
 
     </group>
 </menu>
