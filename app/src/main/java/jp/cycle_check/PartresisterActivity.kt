@@ -3,13 +3,10 @@ package jp.cycle_check
 import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Base64
 import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
-import androidx.constraintlayout.solver.widgets.Snapshot
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
-import kotlinx.android.synthetic.main.activity_detail.*
 import kotlinx.android.synthetic.main.activity_partresister.*
 import java.util.HashMap
 import java.util.Map
@@ -44,7 +41,6 @@ class PartresisterActivity : AppCompatActivity() {
             cheenlingText.setText(cheenling, TextView.BufferType.NORMAL)
             STIText.setText(STIT, TextView.BufferType.NORMAL)
             shetText.setText(shet, TextView.BufferType.NORMAL)
-            shopidText.setText(shop_id, TextView.BufferType.NORMAL)
         }
 
         override fun onChildChanged(dataSnapshot: DataSnapshot, s: String?) {
@@ -94,7 +90,6 @@ class PartresisterActivity : AppCompatActivity() {
             data["cheenling"]=cheenlingText.text.toString()
             data["STIT"]=STIText.text.toString()
             data["shet"]=shetText.text.toString()
-            data["shop_ID"]=shopidText.text.toString()
 
 
             mAuth = FirebaseAuth.getInstance()
@@ -118,29 +113,29 @@ class PartresisterActivity : AppCompatActivity() {
         val cycleRef = mDatabaseReference.child(PartPath).child(key)
         cycleRef!!.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                val map = snapshot.value as kotlin.collections.Map<String, String>
-                var flame = map["Flame"] ?: ""
-                var fdelay = map["fdelay"] ?: ""
-                var ldelay = map["ldelay"] ?: ""
-                var sproket = map["sproket"] ?: ""
-                var wheel = map["wheel"] ?: ""
-                var taiya = map["Taiya"] ?: ""
-                var cheenling = map["cheemling"] ?: ""
-                var STIT = map["STIT"] ?: ""
-                var shet = map["shet"] ?: ""
-                var shop_id=map["shop_ID"]
+                if (snapshot.value!=null) {
+                    val map = snapshot.value as kotlin.collections.Map<String, String>
+                    var flame = map["Flame"] ?: ""
+                    var fdelay = map["fdelay"] ?: ""
+                    var ldelay = map["ldelay"] ?: ""
+                    var sproket = map["sproket"] ?: ""
+                    var wheel = map["wheel"] ?: ""
+                    var taiya = map["Taiya"] ?: ""
+                    var cheenling = map["cheemling"] ?: ""
+                    var STIT = map["STIT"] ?: ""
+                    var shet = map["shet"] ?: ""
+                    var shop_id = map["shop_ID"]
 
-                flamelText.setText(flame, TextView.BufferType.NORMAL)
-                fdelayText.setText(fdelay, TextView.BufferType.NORMAL)
-                ldelayText.setText(ldelay, TextView.BufferType.NORMAL)
-                sproketText.setText(sproket, TextView.BufferType.NORMAL)
-                wheelText.setText(wheel, TextView.BufferType.NORMAL)
-                TaiyaText.setText(taiya, TextView.BufferType.NORMAL)
-                cheenlingText.setText(cheenling, TextView.BufferType.NORMAL)
-                STIText.setText(STIT, TextView.BufferType.NORMAL)
-                shetText.setText(shet, TextView.BufferType.NORMAL)
-                shopidText.setText(shop_id, TextView.BufferType.NORMAL)
-
+                    flamelText.setText(flame, TextView.BufferType.NORMAL)
+                    fdelayText.setText(fdelay, TextView.BufferType.NORMAL)
+                    ldelayText.setText(ldelay, TextView.BufferType.NORMAL)
+                    sproketText.setText(sproket, TextView.BufferType.NORMAL)
+                    wheelText.setText(wheel, TextView.BufferType.NORMAL)
+                    TaiyaText.setText(taiya, TextView.BufferType.NORMAL)
+                    cheenlingText.setText(cheenling, TextView.BufferType.NORMAL)
+                    STIText.setText(STIT, TextView.BufferType.NORMAL)
+                    shetText.setText(shet, TextView.BufferType.NORMAL)
+                }
             }
             override fun onCancelled(firebaseError: DatabaseError) {}
         })

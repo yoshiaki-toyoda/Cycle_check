@@ -1,0 +1,244 @@
+
+<androidx.core.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Shop_Info">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            tools:ignore="MissingConstraints">
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar_shopR"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?attr/colorPrimary" />
+
+
+            <TextView
+                android:id="@+id/quest_ditail"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="#696969"
+                android:text="写真"
+                android:gravity="center_vertical"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:textSize="16sp" />
+
+            <ImageView
+                android:id="@+id/shop_image"
+                android:layout_width="match_parent"
+                android:layout_height="298dp"
+                android:layout_weight="2"
+                android:layout_margin="10dp"
+                android:scaleType="fitCenter"
+                app:srcCompat="@android:color/darker_gray" />
+
+            <TextView
+                android:id="@+id/personal_ditail"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="#696969"
+                android:text="質問者情報"
+                android:gravity="center_vertical"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:textSize="16sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="220dp"
+                    android:layout_weight="4"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/Shop_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:layout_gravity="bottom"
+                        android:text="店舗名"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/shop_area"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:layout_gravity="bottom"
+                        android:text="住所"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/shop_mail"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:layout_gravity="bottom"
+                        android:text="メールアドレス"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/shop_tel"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:layout_gravity="bottom"
+                        android:text="店舗電話番号"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/shop_id"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:text="shop ID"
+                        android:layout_gravity="bottom"
+                        android:textSize="16sp" />
+
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="220dp"
+                    android:layout_weight="2"
+                    android:orientation="vertical">
+
+                    <EditText
+                        android:id="@+id/Shop_name1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:hint="店舗名"
+                        android:textSize="16sp" />
+
+                    <EditText
+                        android:id="@+id/shop_area1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:hint="店舗住所"
+                        android:textSize="16sp" />
+
+                    <EditText
+                        android:id="@+id/shop_mail1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:hint="メールアドレス"
+                        android:textSize="16sp" />
+
+                    <EditText
+                        android:id="@+id/shop_tel1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:hint="電話番号"
+                        android:textSize="16sp" />
+
+
+                    <TextView
+                        android:id="@+id/shop_id1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:textSize="16sp" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+            <TextView
+                android:id="@+id/service_comment1"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:text="店舗サービス"
+                android:background="#696969"
+                android:gravity="center_vertical"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/service_comment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/reportcontents"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:text="店舗コメント"
+                android:background="#696969"
+                android:gravity="center_vertical"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/shop_comment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:textSize="16sp" />
+
+            <Button
+                android:id="@+id/shop_enry"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingStart="80dp"
+                android:paddingEnd="80dp"
+                android:paddingTop="20dp"
+                android:paddingBottom="20dp"
+                android:layout_margin="10dp"
+                android:layout_marginBottom="60dp"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:background="@drawable/button_corners"
+                android:textSize="16dp"
+                android:layout_gravity="center"
+                android:layout_weight="2"
+                android:text="店舗情報登録">
+
+            </Button>
+
+            <Button
+                android:id="@+id/shop_delete"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingStart="80dp"
+                android:paddingEnd="80dp"
+                android:paddingTop="20dp"
+                android:paddingBottom="20dp"
+                android:layout_margin="10dp"
+                android:layout_marginBottom="60dp"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:background="@drawable/button_corners"
+                android:textSize="16dp"
+                android:layout_gravity="center"
+                android:layout_weight="2"
+                android:text="店舗情報削除">
+
+            </Button>
+        </LinearLayout>
+    </ScrollView>
+</androidx.core.widget.NestedScrollView>

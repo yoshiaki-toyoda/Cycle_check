@@ -6,7 +6,6 @@ import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.Service
-import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
@@ -31,13 +30,8 @@ class LocationService: Service(), LocationListener, GpsStatus.Listener {
     //var noAccuracyLocationList: ArrayList<Location>
     //var inaccurateLocationList: ArrayList<Location>
     //var kalmanNGLocationList: ArrayList<Location>
-    var isLogging: Boolean = true
-
+    var isLogging: Boolean = false
     var currentSpeed = 0.0f // meters/second
-
-
-
-
     var kalmanFilter: KalmanLatLong
     var runStartTimeInMillis: Long = 0
 
@@ -60,7 +54,7 @@ class LocationService: Service(), LocationListener, GpsStatus.Listener {
         //inaccurateLocationList = ArrayList()
         //kalmanNGLocationList = ArrayList()
         kalmanFilter = KalmanLatLong(3f)
-        isLogging = true
+        isLogging = false
 
        /* val batteryInfoReceiver = object : BroadcastReceiver() {
             override fun onReceive(ctxt: Context, intent: Intent) {
@@ -84,8 +78,6 @@ class LocationService: Service(), LocationListener, GpsStatus.Listener {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             startForeground()
         }
-
-
         return Service.START_STICKY
     }
 
@@ -119,7 +111,6 @@ class LocationService: Service(), LocationListener, GpsStatus.Listener {
         } else {
             stopSelf();
         }
-
     }
 
     /**
@@ -136,41 +127,60 @@ class LocationService: Service(), LocationListener, GpsStatus.Listener {
         newLocation?.let{
             val speed=it.speed
             var totalDistanceInMeters = 0f
-            if(locationList.size>=2) {
-                for (i in 0 until locationList.size - 1) {
-                    totalDistanceInMeters += locationList[i].distanceTo(locationList[i + 1])
-                }
-            }else{
-                totalDistanceInMeters=0f
-            }
-                Log.d(LOG_TAG, totalDistanceInMeters.toString())
 
-            val currentTimeInNanos = SystemClock.elapsedRealtimeNanos()
-            val currentTimeMillis:Float=(currentTimeInNanos/1000000).toFloat()
-            val elapsedTimeInSeconds = (currentTimeMillis - runStartTimeInMillis.toFloat()) / 1000
-
-
-            Log.d(LOG_TAG, "(" + it.latitude + "," + it.longitude + ")")
-            Log.d(LOG_TAG,speed.toString() )
-            Log.d(LOG_TAG,elapsedTimeInSeconds.toString() )
             gpsCount++
+
+
 
             if (isLogging) {
                 locationList.add(newLocation)
                 if(speed>7){//25km/h以下の時
                     filterAndAddLocation2(it)
+
+                    if(locationList.size>=2) {
+                        for (i in 0 until locationList.size - 1) {
+                            totalDistanceInMeters += locationList[i].distanceTo(locationList[i + 1])
+                        }
+                    }else{
+                        totalDistanceInMeters=0f
+                    }
+                    Log.d(LOG_TAG, totalDistanceInMeters.toString())
+
+                    val currentTimeInNanos = SystemClock.elapsedRealtimeNanos()
+                    val currentTimeMillis:Float=(currentTimeInNanos/1000000).toFloat()
+                    val elapsedTimeInSeconds = (currentTimeMillis - runStartTimeInMillis.toFloat()) / 1000
+                    val intent = Intent("LocationUpdated")
+                    intent.putExtra("location", it)
+                    intent.putExtra("speed", speed)
+                    intent.putExtra("runtime", elapsedTimeInSeconds)
+                    intent.putExtra("distance", totalDistanceInMeters)
+                    LocalBroadcastManager.getInstance(this.application).sendBroadcast(intent)
                 }else {
                     filterAndAddLocation(it)
+                    if(locationList.size>=2) {
+                        for (i in 0 until locationList.size - 1) {
+                            totalDistanceInMeters += locationList[i].distanceTo(locationList[i + 1])
+                        }
+                    }else{
+                        totalDistanceInMeters=0f
+                    }
+                    Log.d(LOG_TAG, totalDistanceInMeters.toString())
+
+                    val currentTimeInNanos = SystemClock.elapsedRealtimeNanos()
+                    val currentTimeMillis:Float=(currentTimeInNanos/1000000).toFloat()
+                    val elapsedTimeInSeconds = (currentTimeMillis - runStartTimeInMillis.toFloat()) / 1000
+                    val intent = Intent("LocationUpdated")
+                    intent.putExtra("location", it)
+                    intent.putExtra("speed", speed)
+                    intent.putExtra("runtime", elapsedTimeInSeconds)
+                    intent.putExtra("distance", totalDistanceInMeters)
+                    LocalBroadcastManager.getInstance(this.application).sendBroadcast(intent)
                 }
             }
 
-            val intent = Intent("LocationUpdated")
-            intent.putExtra("location", it)
-            intent.putExtra("speed", speed)
-            intent.putExtra("runtime", elapsedTimeInSeconds)
-            intent.putExtra("distance", totalDistanceInMeters)
 
-            LocalBroadcastManager.getInstance(this.application).sendBroadcast(intent)
+
+
         }
 
     }
@@ -202,6 +212,7 @@ class LocationService: Service(), LocationListener, GpsStatus.Listener {
 
     }
 
+
     private fun notifyLocationProviderStatusUpdated(isLocationProviderAvailable: Boolean) {
         //Broadcast location provider status change here
     }
@@ -219,13 +230,6 @@ class LocationService: Service(), LocationListener, GpsStatus.Listener {
             for (i in 0 until locationList.size - 1) {
                 totalDistanceInMeters += locationList[i].distanceTo(locationList[i + 1])
             }
-            val batteryLevelStart = batteryLevelArray[0]
-            val batteryLevelEnd = batteryLevelArray[batteryLevelArray.size - 1]
-
-            val batteryLevelScaledStart = batteryLevelScaledArray[0]
-            val batteryLevelScaledEnd = batteryLevelScaledArray[batteryLevelScaledArray.size - 1]
-
-
         }
         isLogging = false
     }

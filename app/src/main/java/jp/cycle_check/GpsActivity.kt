@@ -19,14 +19,16 @@ import android.content.Intent
 
 import android.view.WindowManager
 import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
+import kotlinx.android.synthetic.main.activity_gps.*
 import kotlin.collections.ArrayList
 
 
 class GpsActivity : AppCompatActivity() {
-    private val TAG = "MainActivity"
     private val PERMISSIONS_REQUEST_CODE = 100
     var locationService: LocationService? = null
     var alldistance:Float=0f
+    var buttom_type=0
     //boolean isZooming;
     //boolean isBlockingAutoZoom;
 
@@ -71,6 +73,37 @@ class GpsActivity : AppCompatActivity() {
         } else {
             setup()
         }
+        Gpsstart_button.setOnClickListener() {
+            if(buttom_type==0){
+                this.locationService?.startLogging()
+                Gpsstart_button.text="一時停止"
+                buttom_type=1
+
+            }else{
+                this.locationService?.stopLogging()
+                Gpsstart_button.text="再開"
+                buttom_type=0
+            }
+
+
+            }
+
+
+        Gpskill_button.setOnClickListener(){
+            AlertDialog.Builder(this) // FragmentではActivityを取得して生成
+                .setTitle("確認")
+                .setMessage("終了しますか？")
+                .setPositiveButton("OK", { dialog, which ->
+                    // TODO:Yesが押された時の挙動
+                    this@GpsActivity.locationService?.stopUpdatingLocation()
+                    locationService = null
+                })
+                .setNegativeButton("No", { dialog, which ->
+                    // TODO:Noが押された時の挙動
+                })
+                .show()
+        }
+
 
         locationUpdateReceiver = object : BroadcastReceiver() {
             override fun onReceive(context: Context, intent: Intent) {
@@ -80,11 +113,11 @@ class GpsActivity : AppCompatActivity() {
                 val distance:Float = intent.extras?.getFloat("distance") ?:0f
                 var Acc=0f
                 val textView6 = findViewById<TextView>(R.id.text_view6)
-                speedlist.add(speed*3.6f)//km/hに変換
+                speedlist.add(speed)//km/hに変換
                 timelist.add(runtime)
 
                 //25km/h 7m/s～　5km/h 1.4m/s間の時間を測定　前の値を速度が下回ったら打ち切り
-                if(speed>1.4&&speed<10){
+                if(speed>5&&speed<25){
                     accspeedlist.add(speed)
                     if(accspeedlist.size>=2) {
                         for (i in 0 until accspeedlist.size - 1) {
@@ -93,13 +126,12 @@ class GpsActivity : AppCompatActivity() {
                                 acctimelist.add(runtime)
 
                             }else{
-                                accspeedlist.clear()
+                               accspeedlist.clear()
                                 acctimelist.clear()
-
                             }
                         }
                     }
-                    if(accspeedlist.size>3) {
+                    if(accspeedlist.size>4) {
                         speedmin = (acceleratlist.min())!!.toFloat()
                         speedmax = acceleratlist.max()!!.toFloat()
 
@@ -107,45 +139,32 @@ class GpsActivity : AppCompatActivity() {
                         actimemax = acctimelist.max()!!.toFloat()
 
                         val acc=(speedmax-speedmin)/(actimemax-actimemin)
-
-
+                        acctimelist.clear()
+                        accspeedlist.clear()
                         val str6 = acc.toString()
-                        textView6.text = str6
-
+                        textView6.text = str6+"[m/s^2]"
+                        acclist.add(Acc)
                     }
                 }
 
 
 
 
-                if(acceleratlist.size>=2) {
-                    for (i in 0 until acceleratlist.size - 1) {
-                         Acc = (speedlist[i+1]-speedlist[i])/(timelist[i+1]-timelist[i])
+                val textView3 = findViewById<TextView>(R.id.speed)
+                var str3=0.0f
+                       str3 = speed
+                textView3.text = str3.toString()
 
-                    }
-                }else{
-                     Acc=0f
-                }
-                acceleratlist.add(Acc)
 
-                val text_view1=findViewById<TextView>(R.id.text_view1)
-                val str1 = "Latitude:" + newLocation.getLatitude()
-                text_view1.text = str1
-
-                val textView2 = findViewById<TextView>(R.id.text_view2)
-                val str2 = "Longtude:" + newLocation.getLongitude()
-                textView2.text = str2
-
-                val textView3 = findViewById<TextView>(R.id.text_view3)
-                val str3 = speed.toString()
-                textView3.text = str3
 
                 val textView4 = findViewById<TextView>(R.id.text_view4)
-                val str4 = runtime.toString()
+                val runtime_text=runtime.toInt()
+                val str4 = runtime_text.toString()+"[sec]"
                 textView4.text = str4
 
                 val textView5 = findViewById<TextView>(R.id.text_view5)
-                val str5 = distance.toString()
+                val distance_text=distance.toInt()
+                val str5 = distance_text.toString()+"[m]"
                 textView5.text = str5
 
 
@@ -161,8 +180,11 @@ class GpsActivity : AppCompatActivity() {
 
       graph()
 
-    }
 
+
+
+
+    }
 
 
     fun setup() {
@@ -218,19 +240,21 @@ class GpsActivity : AppCompatActivity() {
         } catch (ex: IllegalArgumentException) {
             ex.printStackTrace()
         }
-
-
         super.onDestroy()
 
     }
+
+
+
+
+
+
 
 fun graph(){
 
 
 
 }
-
-
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
         when (requestCode) {

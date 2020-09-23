@@ -35,13 +35,6 @@ import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import kotlinx.android.synthetic.main.activity_cycleresister.*
 import kotlinx.android.synthetic.main.activity_cycleresister.resistershopText
-import kotlinx.android.synthetic.main.activity_detail.*
-import kotlinx.android.synthetic.main.activity_detail.comText2
-import kotlinx.android.synthetic.main.activity_detail.cyclenameText
-import kotlinx.android.synthetic.main.activity_detail.disText
-import kotlinx.android.synthetic.main.activity_detail.imageView3
-import kotlinx.android.synthetic.main.activity_detail.partbutton
-import kotlinx.android.synthetic.main.activity_detail.shopText
 import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.android.synthetic.main.activity_otheruser.*
 import kotlinx.android.synthetic.main.activity_setting.*

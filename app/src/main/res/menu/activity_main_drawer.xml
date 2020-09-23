@@ -4,16 +4,17 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_own"
-            android:title="所有バイク"/>
+            android:title="自分のバイク"/>
+
         <item
-            android:id="@+id/nav_all"
-            android:title="皆のバイク"/>
+            android:id="@+id/nav_q_all"
+            android:title="皆への相談"/>
         <item
-            android:id="@+id/nav_shop"
-            android:title="質問一覧"/>
+            android:id="@+id/nav_q_shop"
+            android:title="お店への相談"/>
         <item
-            android:id="@+id/nav_board"
-            android:title="回答一覧"/>
+            android:id="@+id/nav_a_all"
+            android:title="自分の回答"/>
 
     </group>
 </menu>

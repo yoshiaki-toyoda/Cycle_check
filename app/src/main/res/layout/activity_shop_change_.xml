@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Shop_Info">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            tools:ignore="MissingConstraints">
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?attr/colorPrimary" />
+
+            <TextView
+                android:id="@+id/quest_ditail"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="#696969"
+                android:text="店舗番号"
+                android:gravity="center_vertical"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/shop_number"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:hint="店舗番号"
+                android:inputType="number"
+                android:textSize="16sp" />
+
+            <Button
+                android:id="@+id/shop_number_entry"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingStart="80dp"
+                android:paddingEnd="80dp"
+                android:paddingTop="20dp"
+                android:paddingBottom="20dp"
+                android:layout_margin="10dp"
+                android:layout_marginBottom="60dp"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:background="@drawable/button_corners"
+                android:textSize="16dp"
+                android:layout_gravity="center"
+                android:layout_weight="2"
+                android:text="店舗番号登録">
+
+            </Button>
+
+        </LinearLayout>
+    </ScrollView>
+</androidx.core.widget.NestedScrollView>

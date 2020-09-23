@@ -193,23 +193,6 @@
             android:hint="サドル型番"
             android:textSize="18sp" />
 
-        <TextView
-            android:id="@+id/shopTextview"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:background="#696969"
-            android:gravity="center_vertical"
-            android:textColor="@color/white"
-            android:textStyle="bold"
-            android:textSize="18sp"
-            android:text="登録店" />
-
-        <EditText
-            android:id="@+id/shopidText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="登録店"
-            android:textSize="18sp" />
 
         <Button
             android:id="@+id/partbutton1"

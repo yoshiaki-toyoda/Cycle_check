@@ -16,7 +16,7 @@ import java.util.ArrayList
 
 class AnswerAdapter(context: Context) : BaseAdapter(){
     private var vLayoutInflater: LayoutInflater
-    private var xCycleinfoArrayList=ArrayList<Questioninfo>()
+    private var xCycleinfoArrayList=ArrayList<Answer_question2>()
 
     init {
         vLayoutInflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
@@ -24,8 +24,6 @@ class AnswerAdapter(context: Context) : BaseAdapter(){
 
     override fun getCount(): Int {
         return xCycleinfoArrayList.size
-
-
     }
 
     override fun getItem(position: Int): Any {
@@ -45,15 +43,7 @@ class AnswerAdapter(context: Context) : BaseAdapter(){
 
 
         val titleText = convertView!!.findViewById<View>(R.id.titleTextView) as TextView
-        titleText.text = xCycleinfoArrayList[position].title
-
-        val nameText = convertView.findViewById<View>(R.id.nameTextView) as TextView
-        // Preferenceから表示名を取得してEditTextに反映させる
-
-        nameText.text = "ユーザー名:\n" + xCycleinfoArrayList[position].name
-
-        val resText = convertView.findViewById<View>(R.id.resTextView) as TextView
-        resText.text = "走行距離：" + xCycleinfoArrayList[position].distance + "Km"
+             titleText.text = xCycleinfoArrayList[position].title
 
         val repot = xCycleinfoArrayList[position].report_type
         var type = ""
@@ -67,24 +57,21 @@ class AnswerAdapter(context: Context) : BaseAdapter(){
             type = "その他相談"
         }
 
+        val resText = convertView.findViewById<View>(R.id.resTextView) as TextView
+        resText.text = "購入店：" + xCycleinfoArrayList[position].shop_ID + "\nレポートタイプ：" + type
 
-        val reportText = convertView.findViewById<View>(R.id.ReportTextView) as TextView
-
-        reportText.text = "購入店：" + xCycleinfoArrayList[position].shop_ID + "\nレポートタイプ：" + type
         val bytes = xCycleinfoArrayList[position].imageBytes
+
         if (bytes.isNotEmpty()) {
             val image = BitmapFactory.decodeByteArray(bytes, 0, bytes.size)
                 .copy(Bitmap.Config.ARGB_8888, true)
             val imageView = convertView.findViewById<View>(R.id.imageView2) as ImageView
             imageView.setImageBitmap(image)
         }
-
-
-
         return convertView
     }
 
-    fun setQuestionArrayList(questionArrayList: ArrayList<Questioninfo>) {
+    fun setQuestionArrayList(questionArrayList: ArrayList<Answer_question2>) {
         xCycleinfoArrayList= questionArrayList
     }
 }

@@ -4,7 +4,6 @@ package jp.cycle_check
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
-import android.preference.PreferenceManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,17 +13,17 @@ import android.widget.TextView
 
 import java.util.ArrayList
 
-class QuestionAdapter(context: Context) : BaseAdapter(){
+class QuestionAdapter(context: Context) : BaseAdapter() {
     private var vLayoutInflater: LayoutInflater
-    private var vCycleinfoArrayList=ArrayList<Questioninfo>()
+    private var vCycleinfoArrayList = ArrayList<Questioninfo>()
 
     init {
-        vLayoutInflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+        vLayoutInflater =
+            context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
     }
 
     override fun getCount(): Int {
         return vCycleinfoArrayList.size
-
 
     }
 
@@ -44,47 +43,41 @@ class QuestionAdapter(context: Context) : BaseAdapter(){
         }
 
 
-            val titleText = convertView!!.findViewById<View>(R.id.titleTextView) as TextView
-            titleText.text = vCycleinfoArrayList[position].title
 
-            val nameText = convertView.findViewById<View>(R.id.nameTextView) as TextView
-            // Preferenceから表示名を取得してEditTextに反映させる
+        val daytext= convertView!!.findViewById<View>(R.id.TypeTextView) as TextView
+        daytext.text=vCycleinfoArrayList[position].date
 
-            nameText.text = "ユーザー名:\n" + vCycleinfoArrayList[position].name
+        val titleText = convertView!!.findViewById<View>(R.id.titleTextView) as TextView
+        titleText.text = vCycleinfoArrayList[position].title
 
-            val resText = convertView.findViewById<View>(R.id.resTextView) as TextView
-            resText.text = "走行距離：" + vCycleinfoArrayList[position].distance + "Km"
+        val repot = vCycleinfoArrayList[position].report_type
 
-            val repot = vCycleinfoArrayList[position].report_type
-            var type = ""
-            if (repot == "defect") {
-                type = "不具合相談"
-            } else if (repot == "update") {
-                type = "アップデート(部品交換)相談"
-            } else if (repot == "mitsumori") {
-                type = "見積相談"
-            } else if (repot == "other") {
-                type = "その他相談"
-            }
+        var type = ""
+        if (repot == "defect") {
+            type = "不具合相談"
+        } else if (repot == "update") {
+            type = "アップデート(部品交換)相談"
+        } else if (repot == "mitsumori") {
+            type = "見積相談"
+        } else if (repot == "other") {
+            type = "その他相談"
+        }
 
 
-            val reportText = convertView.findViewById<View>(R.id.ReportTextView) as TextView
-
-            reportText.text = "購入店：" + vCycleinfoArrayList[position].shop_ID + "\nレポートタイプ：" + type
-            val bytes = vCycleinfoArrayList[position].imageBytes
-            if (bytes.isNotEmpty()) {
-                val image = BitmapFactory.decodeByteArray(bytes, 0, bytes.size)
-                    .copy(Bitmap.Config.ARGB_8888, true)
-                val imageView = convertView.findViewById<View>(R.id.imageView2) as ImageView
-                imageView.setImageBitmap(image)
-            }
-
-
+        val resText = convertView.findViewById<View>(R.id.resTextView) as TextView
+        resText.text = "登録店：" + vCycleinfoArrayList[position].shop_ID + "\nレポートタイプ：" + type
+        val bytes = vCycleinfoArrayList[position].imageBytes
+        if (bytes.isNotEmpty()) {
+            val image = BitmapFactory.decodeByteArray(bytes, 0, bytes.size)
+                .copy(Bitmap.Config.ARGB_8888, true)
+            val imageView = convertView.findViewById<View>(R.id.imageView2) as ImageView
+            imageView.setImageBitmap(image)
+        }
 
         return convertView
     }
 
     fun setQuestionArrayList(questionArrayList: ArrayList<Questioninfo>) {
-        vCycleinfoArrayList= questionArrayList
+        vCycleinfoArrayList = questionArrayList
     }
 }

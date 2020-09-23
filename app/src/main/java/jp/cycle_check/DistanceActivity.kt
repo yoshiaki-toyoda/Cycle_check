@@ -1,59 +1,32 @@
 package jp.cycle_check
 
 
-import android.annotation.SuppressLint
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.renderscript.ScriptGroup
-import android.util.Base64
-import android.view.Menu
-import android.view.MenuItem
-import android.view.View
-import android.widget.ListView
-import androidx.appcompat.app.ActionBarDrawerToggle
-import androidx.appcompat.widget.Toolbar
-import androidx.constraintlayout.solver.widgets.Snapshot
-import androidx.core.view.GravityCompat
-import androidx.drawerlayout.widget.DrawerLayout
-import com.google.android.gms.tasks.OnCompleteListener
-import com.google.firebase.auth.AuthResult
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
-
-import com.google.firebase.auth.FirebaseUser
 
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.ChildEventListener
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 
 import android.app.AlertDialog
-import android.app.PendingIntent
 import com.google.android.material.snackbar.Snackbar
 
-import com.google.firebase.database.*
 import io.realm.Realm
 import io.realm.RealmChangeListener
 import io.realm.Sort
 import kotlinx.android.synthetic.main.activity_distance.*
-import java.text.SimpleDateFormat
 import java.util.HashMap
 
 const val EXTRA_TASK = "jp.cycleapp.Cycle"
 class DistanceActivity : AppCompatActivity() {
     private lateinit var mRealm: Realm
-    private lateinit var sinfo:java.util.HashMap<Any,Any>
-    private lateinit var disinfo:java.util.HashMap<Int,java.util.HashMap<Any,Any>>
     private lateinit var mDatabaseReference: DatabaseReference
     private lateinit var cycle:String
-    private var mapsize:Int=0
     private lateinit var cycle_uid:String
     private var vCycleRef: DatabaseReference? = null
-    var datelist=mutableListOf<String>()
-    var timelist=mutableListOf<String>()
-    var dislist=mutableListOf<Int>()
 
     private val mRealmListener = object : RealmChangeListener<Realm> {
         override fun onChange(element: Realm) {

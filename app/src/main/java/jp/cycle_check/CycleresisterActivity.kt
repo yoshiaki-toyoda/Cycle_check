@@ -57,7 +57,7 @@ class CycleresisterActivity : AppCompatActivity(), View.OnClickListener, Databas
         val adapter = ArrayAdapter(applicationContext,
             android.R.layout.simple_spinner_item, spinnerItems)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        spinner.setPrompt("車両タイプ")
+        spinner.setPrompt("診断部位一覧")
         // spinner に adapter をセット
         // Kotlin Android Extensions
 
@@ -156,7 +156,6 @@ class CycleresisterActivity : AppCompatActivity(), View.OnClickListener, Databas
             // タイトルと本文を取得する
             val cycle_name = resisternameText.text.toString()
             val shop_code = resistershopText.text.toString()
-            val type=spinner
 
             if (cycle_name.isEmpty()) {
                 // タイトルが入力されていない時はエラーを表示するだけ
@@ -176,7 +175,7 @@ class CycleresisterActivity : AppCompatActivity(), View.OnClickListener, Databas
             data["cycle_name"]=cycle_name
             data["shop_ID"]=shop_code
             data["name"]=name
-            data["type"]=type.toString()
+            data["type"]=type
 
             // 添付画像を取得する
             val drawable = imageView2.drawable as? BitmapDrawable

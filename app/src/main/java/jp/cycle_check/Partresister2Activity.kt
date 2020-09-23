@@ -1,17 +1,23 @@
 package jp.cycle_check
 
-import android.content.Context
+
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Base64
-import android.view.inputmethod.InputMethodManager
+
 import android.widget.TextView
-import androidx.constraintlayout.solver.widgets.Snapshot
+
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
-import kotlinx.android.synthetic.main.activity_detail.*
-import kotlinx.android.synthetic.main.activity_partresister.*
-import java.util.HashMap
+import kotlinx.android.synthetic.main.activity_partresister.STIText
+import kotlinx.android.synthetic.main.activity_partresister.TaiyaText
+import kotlinx.android.synthetic.main.activity_partresister.cheenlingText
+import kotlinx.android.synthetic.main.activity_partresister.fdelayText
+import kotlinx.android.synthetic.main.activity_partresister.flamelText
+import kotlinx.android.synthetic.main.activity_partresister.ldelayText
+import kotlinx.android.synthetic.main.activity_partresister.shetText
+import kotlinx.android.synthetic.main.activity_partresister.sproketText
+import kotlinx.android.synthetic.main.activity_partresister.wheelText
+import kotlinx.android.synthetic.main.activity_partresister2.*
 import java.util.Map
 
 class Partresister2Activity : AppCompatActivity() {
@@ -98,16 +104,15 @@ class Partresister2Activity : AppCompatActivity() {
                 var STIT = map["STIT"] ?: ""
                 var shet = map["shet"] ?: ""
 
-                flamelText.setText(flame, TextView.BufferType.NORMAL)
-                fdelayText.setText(fdelay, TextView.BufferType.NORMAL)
-                ldelayText.setText(ldelay, TextView.BufferType.NORMAL)
-                sproketText.setText(sproket, TextView.BufferType.NORMAL)
-                wheelText.setText(wheel, TextView.BufferType.NORMAL)
-                TaiyaText.setText(taiya, TextView.BufferType.NORMAL)
-                cheenlingText.setText(cheenling, TextView.BufferType.NORMAL)
-                STIText.setText(STIT, TextView.BufferType.NORMAL)
-                shetText.setText(shet, TextView.BufferType.NORMAL)
-
+                flamelText2.text=flame
+                fdelayText2.text=fdelay
+                ldelayText2.text=ldelay
+                sproketText2.text=sproket
+                wheelText2.text=wheel
+                TaiyaText2.text=taiya
+                cheenlingText2.text=cheenling
+                STIText2.text=STIT
+                shetText2.text=shet
 
             }
             override fun onCancelled(firebaseError: DatabaseError) {}

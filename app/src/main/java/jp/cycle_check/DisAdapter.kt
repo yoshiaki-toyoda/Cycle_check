@@ -7,8 +7,6 @@ import android.widget.BaseAdapter
 import android.widget.TextView
 import java.text.SimpleDateFormat
 import java.util.*
-import android.R
-import android.R.attr.name
 
 
 

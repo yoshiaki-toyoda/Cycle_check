@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary" />
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/imageView3"
+                android:layout_width="match_parent"
+                android:layout_height="280dp"
+                android:scaleType="fitCenter"
+                android:layout_margin="10dp"
+                app:srcCompat="@android:color/darker_gray" />
+
+            <TextView
+            android:id="@+id/image2Text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="クリックで変更"
+            android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/cycleinfoText"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="#696969"
+                android:textStyle="bold"
+                android:gravity="center_vertical"
+                android:text="車両情報"
+                android:textColor="@color/white"
+                android:textSize="16sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="5"
+                    android:orientation="vertical">
+                    <TextView
+                        android:id="@+id/cycle1_nametext"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:text="車両名"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/infoText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:text="登録店舗"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/disinfoText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:text="走行距離"
+                        android:textSize="16sp" />
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:orientation="vertical">
+
+                    <EditText
+                        android:id="@+id/cyclenameText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="20sp" />
+
+                    <TextView
+                        android:id="@+id/shopText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/disText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:textSize="16sp" />
+
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/comtitleText"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="#696969"
+                android:textStyle="bold"
+                android:gravity="center_vertical"
+                android:text="コメント"
+                android:textColor="@color/white"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/comText2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="コメント入力" />
+
+            <Button
+                android:id="@+id/partbutton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingStart="80dp"
+                android:paddingEnd="80dp"
+                android:paddingTop="20dp"
+                android:paddingBottom="20dp"
+                android:layout_margin="10dp"
+                android:layout_marginBottom="60dp"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:background="@drawable/button_corners"
+                android:textSize="16dp"
+                android:layout_gravity="center"
+                android:text="部品 確認/変更" />
+
+            <Button
+                android:id="@+id/delete_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingStart="80dp"
+                android:paddingEnd="80dp"
+                android:paddingTop="20dp"
+                android:paddingBottom="20dp"
+                android:layout_margin="10dp"
+                android:layout_marginBottom="60dp"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:background="@drawable/button_corners"
+                android:textSize="16dp"
+                android:layout_gravity="center"
+                android:text="登録内容削除" />
+
+
+        </LinearLayout>
+    </ScrollView>
+    </LinearLayout>
+
+
+

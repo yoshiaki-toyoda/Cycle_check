@@ -25,9 +25,6 @@ import android.widget.*
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
-import kotlinx.android.synthetic.main.activity_cycleresister.*
-import kotlinx.android.synthetic.main.activity_detail.*
-import kotlinx.android.synthetic.main.activity_question.*
 import kotlinx.android.synthetic.main.activity_question.Titile_ditail
 import kotlinx.android.synthetic.main.activity_question.area_name
 import kotlinx.android.synthetic.main.activity_question.com_edit
@@ -50,13 +47,13 @@ import kotlinx.android.synthetic.main.activity_question.update
 import kotlinx.android.synthetic.main.activity_question.user_name
 import kotlinx.android.synthetic.main.activity_question.yosan_edit
 import kotlinx.android.synthetic.main.activity_question_all.*
-import kotlinx.android.synthetic.main.activity_resister.*
 import java.io.ByteArrayOutputStream
-import java.util.HashMap
+import java.text.SimpleDateFormat
+import java.util.*
 
 class QuestionAllActivity : AppCompatActivity(),View.OnClickListener,DatabaseReference.CompletionListener{
     private lateinit var mCycle: Cycleinfo
-    private val spinnerItems= arrayListOf<String>("フレーム","フロントディレイラー","リアディレイラー","スプロケット","ホイール","タイヤ","チェーンリング","STIレバー","サドル")
+    private val spinnerItems= arrayListOf<String>("新規購入","フレーム","フロントディレイラー","リアディレイラー","スプロケット","ホイール","タイヤ","チェーンリング","STIレバー","サドル","その他")
     private val PERMISSIONS_REQUEST_CODE = 100
     private val CHOOSER_REQUEST_CODE = 100
     private var mPictureUri: Uri? = null
@@ -65,6 +62,7 @@ class QuestionAllActivity : AppCompatActivity(),View.OnClickListener,DatabaseRef
     var answer_type=""
     var old_type=""
     var part=""
+    var create_day=""
     private lateinit var mAuth: FirebaseAuth
     private var mReportRef: DatabaseReference? = null
 
@@ -160,16 +158,18 @@ class QuestionAllActivity : AppCompatActivity(),View.OnClickListener,DatabaseRef
 
 
         //レポートに入力
-        user_name.text="ユーザー名："+mCycle.name.toString()
-        cycle_name.text="自転車名"+mCycle.cycle_name.toString()
-        shopText.text="Shop名："+mCycle.shop_ID.toString()
-        disText.text="走行距離："+mCycle.distance+"km"
-        area_name.text="地域："+area
+        user_name.text=mCycle.name.toString()
+        cycle_name.text=mCycle.cycle_name.toString()
+        shopText.text=mCycle.shop_ID.toString()
+        disText.text=mCycle.distance+"km"
+        area_name.text=area
+        val date = Date()
+        val format = SimpleDateFormat("yyyy/MM/dd", Locale.getDefault())
+        create_day=format.format(date)
+        dayText2.text=create_day
 
         //ラジオボタン押下時の操作
         val radioGroup1 = findViewById<RadioGroup>(R.id.group1)
-
-
 
         radioGroup1.setOnCheckedChangeListener { group, checkedId ->
             // キーボードが出てたら閉じる
@@ -385,6 +385,7 @@ class QuestionAllActivity : AppCompatActivity(),View.OnClickListener,DatabaseRef
             data["yosan"] = yosan
             data["distance"]=mCycle.distance
             data["area"]=area
+            data["day"]=create_day
 
             // 添付画像を取得する
             val drawable = imageView4.drawable as? BitmapDrawable
@@ -398,7 +399,18 @@ class QuestionAllActivity : AppCompatActivity(),View.OnClickListener,DatabaseRef
             }
 
             genreRef.setValue(data)
+            Toast.makeText(applicationContext, "質問を登録しました", Toast.LENGTH_LONG).show()
             //progressBar.visibility = View.VISIBLE
+        }
+
+        finishbutton.setOnClickListener { v ->
+            mDatabaseReference = FirebaseDatabase.getInstance().reference
+            mAuth = FirebaseAuth.getInstance()
+            mReportRef = mDatabaseReference.child("report").child("All").child(mCycle.cycleUid)
+            mReportRef!!.removeValue()
+
+
+
         }
     }
     @SuppressLint("MissingSuperCall")

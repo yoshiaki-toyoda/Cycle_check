@@ -10,7 +10,6 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import kotlinx.android.synthetic.main.activity_setting.*
-import java.util.*
 import kotlin.collections.HashMap
 
 class SettingActivity : AppCompatActivity() {

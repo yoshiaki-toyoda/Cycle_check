@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navigation_cycle"
+        android:icon="@drawable/cycle_icon"
+        android:title="車両" />
+
+    <item
+        android:id="@+id/navigation_cycling"
+        android:icon="@drawable/cycling_icon"
+        android:title="サイクリング" />
+
+    <item
+        android:id="@+id/navigation_analise"
+        android:icon="@drawable/cycling_analise"
+        android:title="走行実績" />
+
+    <item
+        android:id="@+id/navigation_report"
+        android:icon="@drawable/create_report"
+        android:title="相談" />
+
+
+</menu>

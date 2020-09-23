@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/GraphTextview"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="#696969"
+        android:gravity="center_vertical"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        android:textSize="18sp"
+        android:text="グラフ" />
+
+    <com.github.mikephil.charting.charts.CombinedChart
+        android:id="@+id/bar_chart"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:layout_margin="10dp" />
+
+    <TextView
+        android:id="@+id/flamelTextview"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="#696969"
+        android:gravity="center_vertical"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        android:textSize="18sp"
+        android:text="走行情報" />
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="10"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/total_runText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="走行距離"
+                    android:textSize="16dp" />
+
+                <TextView
+                    android:id="@+id/total_timeText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="走行時間"
+                    android:textSize="16dp" />
+
+                <TextView
+                    android:id="@+id/total_AvespeedText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="平均速度"
+                    android:textSize="16dp" />
+
+                <TextView
+                    android:id="@+id/total_AveaccText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="加速平均"
+                    android:textSize="16dp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="4"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/total_runText2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="走行距離"
+                    android:textSize="16dp" />
+
+                <TextView
+                    android:id="@+id/total_timeText2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="走行時間"
+                    android:textSize="16dp" />
+
+                <TextView
+                    android:id="@+id/total_AvespeedText2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="平均速度"
+                    android:textSize="16dp" />
+
+                <TextView
+                    android:id="@+id/total_AveaccText2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="加速平均"
+                    android:textSize="16dp" />
+
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>

@@ -1,21 +1,15 @@
 package jp.cycle_check
 
-import android.content.Intent
+
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.github.mikephil.charting.animation.Easing
-import com.github.mikephil.charting.charts.LineChart
-import com.github.mikephil.charting.formatter.PercentFormatter
-import java.util.Arrays.asList
-import com.github.mikephil.charting.utils.ColorTemplate
 import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.*
 import com.github.mikephil.charting.formatter.IValueFormatter
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
-import com.github.mikephil.charting.interfaces.datasets.IBarDataSet
-import com.github.mikephil.charting.interfaces.datasets.ILineDataSet
 import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.activity_distance_grap.*
 import java.text.SimpleDateFormat
@@ -23,28 +17,8 @@ import java.util.*
 import kotlin.collections.ArrayList
 import com.github.mikephil.charting.data.CombinedData
 
-import androidx.core.content.ContextCompat.getSystemService
-import android.icu.lang.UCharacter.GraphemeClusterBreak.T
-import androidx.core.content.ContextCompat.getSystemService
-import android.icu.lang.UCharacter.GraphemeClusterBreak.T
-
-import androidx.core.content.ContextCompat.getSystemService
-import android.icu.lang.UCharacter.GraphemeClusterBreak.T
-import com.github.mikephil.charting.components.XAxis.XAxisPosition
 import com.github.mikephil.charting.components.YAxis
 
-import androidx.core.content.ContextCompat.getSystemService
-import android.icu.lang.UCharacter.GraphemeClusterBreak.T
-
-import androidx.core.content.ContextCompat.getSystemService
-import android.icu.lang.UCharacter.GraphemeClusterBreak.T
-
-import androidx.core.content.ContextCompat.getSystemService
-import android.icu.lang.UCharacter.GraphemeClusterBreak.T
-
-import androidx.core.content.ContextCompat.getSystemService
-import android.icu.lang.UCharacter.GraphemeClusterBreak.T
-import kotlinx.android.synthetic.main.activity_resister.*
 
 
 class DistanceGrapActivity : AppCompatActivity() {
@@ -152,10 +126,10 @@ class DistanceGrapActivity : AppCompatActivity() {
 
         chart.xAxis.setAxisMaximum(data.getXMax() + 0.5f)
         chart.xAxis.setAxisMinimum(data.getXMin() - 0.5f)
-        chart.xAxis.textSize=15f
+        chart.xAxis.textSize=13f
         chart.setExtraOffsets(0f,0f,20f,12f)
-        chart.axisRight.textSize=15f
-        chart.axisLeft.textSize=15f
+        chart.axisRight.textSize=13f
+        chart.axisLeft.textSize=13f
         chart.setData(data)
         chart.setVisibleXRangeMaximum(6f)
 
@@ -217,7 +191,7 @@ class DistanceGrapActivity : AppCompatActivity() {
             setStackLabels(arrayOf("Ave Speed"))
             setColors(Color.rgb(61, 165, 255))
             setValueTextColor(Color.rgb(61, 165, 255))
-            setValueTextSize(15f)
+            setValueTextSize(13f)
             setAxisDependency(YAxis.AxisDependency.LEFT)
         }
 
@@ -250,7 +224,7 @@ class DistanceGrapActivity : AppCompatActivity() {
             setFillColor(Color.rgb(240, 238, 70));
             setMode(LineDataSet.Mode.CUBIC_BEZIER);
             setDrawValues(true);
-            setValueTextSize(15f);
+            setValueTextSize(13f);
             setValueTextColor(Color.rgb(240, 238, 70));
             setAxisDependency(YAxis.AxisDependency.RIGHT)
         }

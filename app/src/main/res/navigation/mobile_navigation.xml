@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/navigation_cycle">
+
+    <fragment
+        android:id="@+id/navigation_cycle"
+        android:name="jp.cycle_check.ui.Fragment.CycleFragment"
+        android:label="車両"
+        tools:layout="@layout/fragment_cycling" />
+
+    <fragment
+        android:id="@+id/navigation_cycling"
+        android:name="jp.cycle_check.ui.Fragment.CyclingFragment"
+        android:label="サイクリング"
+        tools:layout="@layout/fragment_cycle" />
+
+    <fragment
+        android:id="@+id/navigation_analise"
+        android:name="jp.cycle_check.ui.Fragment.AnaliseFragment"
+        android:label="走行経歴"
+        tools:layout="@layout/fragment_analise" />
+
+    <fragment
+        android:id="@+id/navigation_report"
+        android:name="jp.cycle_check.ui.Fragment.ReportFragment"
+        android:label="レポート作成"
+        tools:layout="@layout/fragment_analise" />
+</navigation>

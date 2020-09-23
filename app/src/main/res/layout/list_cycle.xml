@@ -8,16 +8,25 @@
 
     <ImageView
         android:id="@+id/imageView2"
+        android:layout_margin="10dp"
         android:layout_weight="2"
-        android:layout_width="match_parent"
-        android:layout_height="150dp" />
+        android:layout_width="300dp"
+        android:layout_height="90dp" />
 
     <LinearLayout android:layout_width="match_parent"
+
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:layout_weight="2"
         xmlns:android="http://schemas.android.com/apk/res/android">
 
+        <TextView
+            android:id="@+id/TypeTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:layout_marginTop="10dp"
+            android:textSize="10dp" />
 
     <TextView
         android:id="@+id/titleTextView"
@@ -30,39 +39,15 @@
         android:text="Title" />
 
         <TextView
-            android:id="@+id/nameTextView"
-            android:layout_marginTop="5dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:text="ユーザー名" />
-
-        <TextView
             android:id="@+id/resTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
+            android:layout_marginTop="25dp"
             android:text="走行距離" />
-        <TextView
-            android:id="@+id/ReportTextView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:text="購入店" />
-        <TextView
-            android:id="@+id/ReportdayTextView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:text="登録日" />
 
-        <TextView
-            android:id="@+id/TypeTextView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:text="タイプ" />
-</LinearLayout>
+
+    </LinearLayout>
 
 </LinearLayout>
 

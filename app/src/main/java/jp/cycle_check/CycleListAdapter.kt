@@ -24,14 +24,12 @@ class CycleListAdapter(context: Context) : BaseAdapter(){
 
     override fun getCount(): Int {
             return mCycleinfoArrayList.size
-            return vCycleinfoArrayList.size
-
 
     }
 
     override fun getItem(position: Int): Any {
         return mCycleinfoArrayList[position]
-        return vCycleinfoArrayList[position]
+
     }
 
     override fun getItemId(position: Int): Long {
@@ -47,24 +45,16 @@ class CycleListAdapter(context: Context) : BaseAdapter(){
 
         if(mCycleinfoArrayList!==null) {
 
-
             val titleText = convertView!!.findViewById<View>(R.id.titleTextView) as TextView
             titleText.text ="名称"+ mCycleinfoArrayList[position].cycle_name
 
-            val nameText = convertView.findViewById<View>(R.id.nameTextView) as TextView
-            nameText.text = "ユーザー名:" + mCycleinfoArrayList[position].name
 
             val resText = convertView.findViewById<View>(R.id.resTextView) as TextView
             resText.text = "走行距離：" + mCycleinfoArrayList[position].distance + "Km"
 
-            val shopText = convertView.findViewById<View>(R.id.ReportTextView) as TextView
-            shopText.text = "登録店："+mCycleinfoArrayList[position].shop_ID
-
-            val dateText = convertView.findViewById<View>(R.id.ReportdayTextView) as TextView
-            dateText.text="登録日:"+mCycleinfoArrayList[position].date
-
+    val type_text=mCycleinfoArrayList[position].type.toString()
             val typeText = convertView.findViewById<View>(R.id.TypeTextView) as TextView
-            typeText.text="タイプ:"+mCycleinfoArrayList[position].type
+            typeText.text="タイプ:"+mCycleinfoArrayList[position].type.toString()
 
 
             val bytes = mCycleinfoArrayList[position].imageBytes
@@ -75,7 +65,6 @@ class CycleListAdapter(context: Context) : BaseAdapter(){
                 imageView.setImageBitmap(image)
             }
 
-
         }
 
         return convertView
@@ -83,9 +72,5 @@ class CycleListAdapter(context: Context) : BaseAdapter(){
     fun setCycleArrayList(cycleArrayList: ArrayList<Cycleinfo>) {
         mCycleinfoArrayList= cycleArrayList
     }
-    fun getNowDate(): String {
-        val df = SimpleDateFormat("yyyy/MM/dd HH:mm:ss")
-        val date = Date(System.currentTimeMillis())
-        return df.format(date)
-    }
+
 }

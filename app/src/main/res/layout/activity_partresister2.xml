@@ -23,7 +23,7 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/flamelTextview"
+                android:id="@+id/flamelTextview2"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:background="#696969"
@@ -33,15 +33,15 @@
                 android:textSize="18sp"
                 android:text="フレーム型番" />
 
-            <EditText
-                android:id="@+id/flamelText"
+            <TextView
+                android:id="@+id/flamelText2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="フレーム型番"
                 android:textSize="18sp" />
 
             <TextView
-                android:id="@+id/fdelayTextview"
+                android:id="@+id/fdelayTextview2"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:background="#696969"
@@ -51,8 +51,8 @@
                 android:textSize="18sp"
                 android:text="フロントディレイラー型番" />
 
-            <EditText
-                android:id="@+id/fdelayText"
+            <TextView
+                android:id="@+id/fdelayText2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
 
@@ -60,7 +60,7 @@
                 android:textSize="18sp" />
 
             <TextView
-                android:id="@+id/ldelayTextview"
+                android:id="@+id/ldelayTextview2"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:background="#696969"
@@ -71,15 +71,15 @@
                 android:text="リアディレイラー型番"
                />
 
-            <EditText
-                android:id="@+id/ldelayText"
+            <TextView
+                android:id="@+id/ldelayText2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
 
                 android:hint="リアディレイラー型番"
                 android:textSize="18sp" />
             <TextView
-                android:id="@+id/sproketTextview"
+                android:id="@+id/sproketTextview2"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:background="#696969"
@@ -89,8 +89,8 @@
                 android:textSize="18sp"
                 android:text="スプロケット型番" />
 
-            <EditText
-                android:id="@+id/sproketText"
+            <TextView
+                android:id="@+id/sproketText2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
 
@@ -98,7 +98,7 @@
                 android:textSize="18sp" />
 
             <TextView
-                android:id="@+id/wheelTextview"
+                android:id="@+id/wheelTextview2"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:background="#696969"
@@ -109,8 +109,8 @@
 
                 android:text="ホイール型番" />
 
-            <EditText
-                android:id="@+id/wheelText"
+            <TextView
+                android:id="@+id/wheelText2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
 
@@ -118,7 +118,7 @@
                 android:textSize="18sp" />
 
             <TextView
-                android:id="@+id/TaiyaTextview"
+                android:id="@+id/TaiyaTextview2"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:background="#696969"
@@ -129,8 +129,8 @@
 
                 android:text="タイヤ型番" />
 
-            <EditText
-                android:id="@+id/TaiyaText"
+            <TextView
+                android:id="@+id/TaiyaText2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
 
@@ -138,7 +138,7 @@
                 android:textSize="18sp" />
 
             <TextView
-                android:id="@+id/cheenlingTextview"
+                android:id="@+id/cheenlingTextview2"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:background="#696969"
@@ -149,8 +149,8 @@
 
                 android:text="チェーンリング型番" />
 
-            <EditText
-                android:id="@+id/cheenlingText"
+            <TextView
+                android:id="@+id/cheenlingText2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
 
@@ -158,7 +158,7 @@
                 android:textSize="18sp" />
 
             <TextView
-                android:id="@+id/STITextview"
+                android:id="@+id/STITextview2"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:background="#696969"
@@ -168,15 +168,15 @@
                 android:textSize="18sp"
                 android:text="STIレバー型番" />
 
-            <EditText
-                android:id="@+id/STIText"
+            <TextView
+                android:id="@+id/STIText2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="STIレバー型番"
                 android:textSize="18sp" />
 
             <TextView
-                android:id="@+id/shetTextview"
+                android:id="@+id/shetTextview2"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:background="#696969"
@@ -186,8 +186,8 @@
                 android:textSize="18sp"
                 android:text="サドル型番" />
 
-            <EditText
-                android:id="@+id/shetText"
+            <TextView
+                android:id="@+id/shetText2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="サドル型番"

@@ -1,43 +1,83 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<ScrollView android:layout_width="match_parent"
+<ScrollView xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="20dp"
-    tools:context=".MainActivity">
+    tools:context=".GpsActivity">
+
+
 
     <TextView
-        android:id="@+id/text_view1"
-        android:textSize="20sp"
+        android:id="@+id/STITextview2"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="#696969"
+        android:gravity="center_vertical"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        android:textSize="18sp"
+        android:text="速度[km/h]" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+    <TextView
+        android:id="@+id/speed"
+        android:textSize="60sp"
+        android:layout_weight="4"
+        android:textColor="#0099CC"
         android:layout_margin="20dp"
-        android:textColor="#44f"
+        android:layout_gravity="center"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-    <TextView
-        android:id="@+id/text_view2"
-        android:textSize="20sp"
-        android:textColor="#f44"
-        android:layout_margin="20dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/km"
+            android:textSize="20sp"
+            android:textColor="#0099CC"
+            android:layout_gravity="center"
+            android:gravity="left"
+            android:layout_above="@+id/speed"
+            android:layout_weight="2"
+            android:text="km/h"
+            android:layout_width="218dp"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
 
     <TextView
-        android:id="@+id/text_view3"
-        android:textSize="20sp"
-        android:textColor="#f44"
-        android:layout_margin="20dp"
+        android:id="@+id/STITextview3"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="40dp"
+        android:background="#696969"
+        android:gravity="center_vertical"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        android:textSize="18sp"
+        android:text="走行距離/走行時間" />
+
 
     <TextView
         android:id="@+id/text_view4"
+        android:textSize="20sp"
+        android:textColor="#f44"
+        android:layout_margin="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+
+
+    <TextView
+        android:id="@+id/text_view6"
         android:textSize="20sp"
         android:textColor="#f44"
         android:layout_margin="20dp"
@@ -52,17 +92,37 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-    <TextView
-        android:id="@+id/text_view6"
-        android:textSize="20sp"
-        android:textColor="#f44"
-        android:layout_margin="20dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
     <Button
         android:id="@+id/Gpsstart_button"
-        android:text="Button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingStart="80dp"
+        android:text="開始"
+        android:paddingEnd="80dp"
+        android:paddingTop="20dp"
+        android:paddingBottom="20dp"
+        android:layout_margin="10dp"
+        android:layout_marginBottom="60dp"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        android:background="@drawable/button_corners"
+        android:textSize="16dp"
+        android:layout_gravity="center"/>
+
+    <Button
+        android:id="@+id/Gpskill_button"
+        android:text="終了"
+        android:paddingStart="80dp"
+        android:paddingEnd="80dp"
+        android:paddingTop="20dp"
+        android:paddingBottom="20dp"
+        android:layout_margin="10dp"
+        android:layout_marginBottom="60dp"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        android:background="@drawable/button_corners"
+        android:textSize="16dp"
+        android:layout_gravity="center"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 

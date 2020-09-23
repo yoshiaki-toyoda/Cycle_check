@@ -19,6 +19,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             tools:ignore="MissingConstraints">
+
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
@@ -167,12 +168,11 @@
                         android:textSize="16sp" />
 
                     <TextView
-                        android:id="@+id/dayText"
+                        android:id="@+id/dayText2"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="2"
                         android:text="レポート作成日"
-                        android:gravity="center_horizontal"
                         android:textSize="16sp" />
                 </LinearLayout>
 
@@ -287,7 +287,7 @@
             <EditText
                 android:id="@+id/problem_edit"
                 android:layout_width="match_parent"
-                android:layout_height="100dp"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="top|left"
                 android:hint=""
@@ -339,7 +339,7 @@
                 <EditText
                     android:id="@+id/type_otheredit"
                     android:layout_width="match_parent"
-                    android:layout_height="40dp"
+                    android:layout_height="wrap_content"
                     android:layout_weight="2"
                     android:hint="その他希望入力"
                     android:gravity="top|left"
@@ -356,13 +356,13 @@
                 android:gravity="center_vertical"
                 android:textColor="@color/white"
                 android:textStyle="bold"
-                android:text="解決希望予算 ※部品交換時"
+                android:text="解決希望予算"
                 android:textSize="16sp" />
 
             <EditText
                 android:id="@+id/yosan_edit"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
+                android:layout_height="wrap_content"
                 android:hint="例1：4万円程度～最高10万円等,例2:メンテ方法相談のみ"
                 android:textSize="14sp" />
             <TextView
@@ -416,39 +416,45 @@
             <EditText
                 android:id="@+id/com_edit"
                 android:layout_width="match_parent"
-                android:layout_height="100dp"
+                android:layout_height="wrap_content"
                 android:gravity="top|left"
                 android:hint="例1：交換は自分でできますので、予算に合う部品を何点か見繕っていただけると助かります"
                 android:textSize="12sp" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:layout_weight="2"
-                android:orientation="horizontal">
 
                 <Button
                     android:id="@+id/resisterbutton"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="2"
+                    android:paddingStart="80dp"
+                    android:paddingEnd="80dp"
+                    android:paddingTop="20dp"
+                    android:paddingBottom="20dp"
+                    android:layout_margin="10dp"
+                    android:layout_marginBottom="60dp"
+                    android:textColor="@color/white"
+                    android:textStyle="bold"
+                    android:background="@drawable/button_corners"
+                    android:textSize="16dp"
+                    android:layout_gravity="center"
                     android:text="レポート確定" />
 
-                <Button
-                    android:id="@+id/answer_button"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="2"
-                    android:text="回答確認" />
-
-
-            </LinearLayout>
             <Button
                 android:id="@+id/finishbutton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="2"
-                android:text="回答締め切り" />
+                android:paddingStart="80dp"
+                android:paddingEnd="80dp"
+                android:paddingTop="20dp"
+                android:paddingBottom="20dp"
+                android:layout_margin="10dp"
+                android:layout_marginBottom="60dp"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:background="@drawable/button_corners"
+                android:textSize="16dp"
+                android:layout_gravity="center"
+                android:text="質問削除" />
         </LinearLayout>
 
 

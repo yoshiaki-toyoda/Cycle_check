@@ -21,30 +21,62 @@ import android.util.Base64
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.*
+import androidx.appcompat.app.AlertDialog
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
-import kotlinx.android.synthetic.main.activity_cycleresister.*
-import kotlinx.android.synthetic.main.activity_detail.*
 import kotlinx.android.synthetic.main.activity_question.*
+import kotlinx.android.synthetic.main.activity_question.Titile_ditail
+import kotlinx.android.synthetic.main.activity_question.area_name
+import kotlinx.android.synthetic.main.activity_question.com_edit
+import kotlinx.android.synthetic.main.activity_question.cospa
+import kotlinx.android.synthetic.main.activity_question.cycle_name
+import kotlinx.android.synthetic.main.activity_question.defect
 import kotlinx.android.synthetic.main.activity_question.disText
+import kotlinx.android.synthetic.main.activity_question.imageView4
+import kotlinx.android.synthetic.main.activity_question.mitsumori
+import kotlinx.android.synthetic.main.activity_question.oldpart_no
+import kotlinx.android.synthetic.main.activity_question.oldpart_yes
+import kotlinx.android.synthetic.main.activity_question.other
+import kotlinx.android.synthetic.main.activity_question.otherchoise
+import kotlinx.android.synthetic.main.activity_question.perform
+import kotlinx.android.synthetic.main.activity_question.problem_edit
+import kotlinx.android.synthetic.main.activity_question.resisterbutton
 import kotlinx.android.synthetic.main.activity_question.shopText
-import kotlinx.android.synthetic.main.activity_resister.*
+import kotlinx.android.synthetic.main.activity_question.type_otheredit
+import kotlinx.android.synthetic.main.activity_question.update
+import kotlinx.android.synthetic.main.activity_question.user_name
+import kotlinx.android.synthetic.main.activity_question.yosan_edit
 import java.io.ByteArrayOutputStream
-import java.util.HashMap
+import java.text.SimpleDateFormat
+import java.util.*
 
-class QuestionActivity : AppCompatActivity(),View.OnClickListener,DatabaseReference.CompletionListener{
+class QuestionActivity : AppCompatActivity(), View.OnClickListener,
+    DatabaseReference.CompletionListener {
     private lateinit var mCycle: Cycleinfo
-    private val spinnerItems= arrayListOf<String>("フレーム","フロントディレイラー","リアディレイラー","スプロケット","ホイール","タイヤ","チェーンリング","STIレバー","サドル")
+    var create_day=""
+    private val spinnerItems = arrayListOf<String>(
+        "購入相談",
+        "フレーム",
+        "フロントディレイラー",
+        "リアディレイラー",
+        "スプロケット",
+        "ホイール",
+        "タイヤ",
+        "チェーンリング",
+        "STIレバー",
+        "サドル",
+        "その他"
+    )
     private val PERMISSIONS_REQUEST_CODE = 100
     private val CHOOSER_REQUEST_CODE = 100
     private var mPictureUri: Uri? = null
     private lateinit var mDatabaseReference: DatabaseReference
-    var report_type=""
-    var answer_type=""
-    var old_type=""
-    var part=""
-    var area=""
+    var report_type = ""
+    var answer_type = ""
+    var old_type = ""
+    var part = ""
+    var area = ""
     private lateinit var mAuth: FirebaseAuth
     private var mReportRef: DatabaseReference? = null
 
@@ -57,13 +89,14 @@ class QuestionActivity : AppCompatActivity(),View.OnClickListener,DatabaseRefere
         mCycle = extras.get("cycleinfo") as Cycleinfo
         //area情報取得
         val sp = PreferenceManager.getDefaultSharedPreferences(this)
-         area = sp.getString(AreaKEY, "")
+        area = sp.getString(AreaKEY, "")
         mDatabaseReference = FirebaseDatabase.getInstance().reference
         mAuth = FirebaseAuth.getInstance()
-        mReportRef = mDatabaseReference.child("report").child("shop").child(mCycle.shop_ID).child(mCycle.cycleUid)
+        mReportRef = mDatabaseReference.child("report").child("shop").child(mCycle.shop_ID)
+            .child(mCycle.cycleUid)
         mReportRef!!.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                if(snapshot.value!== null) {
+                if (snapshot.value !== null) {
                     val map = snapshot.value as Map<String, String>
                     report_type = map["report_type"] ?: ""
                     answer_type = map["answer_type"] ?: ""
@@ -135,16 +168,21 @@ class QuestionActivity : AppCompatActivity(),View.OnClickListener,DatabaseRefere
                 }
 
             }
+
             override fun onCancelled(firebaseError: DatabaseError) {}
         })
 
 
         //レポートに入力
-        user_name.text=mCycle.name.toString()
-        cycle_name.text=mCycle.cycle_name.toString()
-        shopText.text=mCycle.shop_ID.toString()
-        disText.text=mCycle.distance+"km"
-        area_name.text=area
+        user_name.text = mCycle.name.toString()
+        cycle_name.text = mCycle.cycle_name.toString()
+        shopText.text = mCycle.shop_ID.toString()
+        disText.text = mCycle.distance + "km"
+        area_name.text = area
+        val date = Date()
+        val format = SimpleDateFormat("yyyy/MM/dd", Locale.getDefault())
+        create_day=format.format(date)
+        dayText.text=create_day.toString()
 
         //ラジオボタン押下時の操作
         val radioGroup1 = findViewById<RadioGroup>(R.id.group1)
@@ -157,33 +195,30 @@ class QuestionActivity : AppCompatActivity(),View.OnClickListener,DatabaseRefere
             im.hideSoftInputFromWindow(group.windowToken, InputMethodManager.HIDE_NOT_ALWAYS)
             // checkedIdから、選択されたRadioButtonを取得
             val radioButton = findViewById<RadioButton>(checkedId)
-            if(radioButton==defect){
-                radioButton.isChecked=true
-                update.isChecked=false
-                mitsumori.isChecked=false
-                other.isChecked=false
-                report_type="defect"
-            }
-            else if(radioButton==update){
-                radioButton.isChecked=true
-                defect.isChecked=false
-                mitsumori.isChecked=false
-                other.isChecked=false
-                report_type="update"
-            }
-            else if(radioButton==mitsumori){
-                radioButton.isChecked=true
-                defect.isChecked=false
-                update.isChecked=false
-                other.isChecked=false
-                report_type="mitsumori"
-            }
-            else if(radioButton==other){
-                radioButton.isChecked=true
-                defect.isChecked=false
-                update.isChecked=false
-                mitsumori.isChecked=false
-                report_type="other"
+            if (radioButton == defect) {
+                radioButton.isChecked = true
+                update.isChecked = false
+                mitsumori.isChecked = false
+                other.isChecked = false
+                report_type = "defect"
+            } else if (radioButton == update) {
+                radioButton.isChecked = true
+                defect.isChecked = false
+                mitsumori.isChecked = false
+                other.isChecked = false
+                report_type = "update"
+            } else if (radioButton == mitsumori) {
+                radioButton.isChecked = true
+                defect.isChecked = false
+                update.isChecked = false
+                other.isChecked = false
+                report_type = "mitsumori"
+            } else if (radioButton == other) {
+                radioButton.isChecked = true
+                defect.isChecked = false
+                update.isChecked = false
+                mitsumori.isChecked = false
+                report_type = "other"
             }
         }
 
@@ -191,41 +226,39 @@ class QuestionActivity : AppCompatActivity(),View.OnClickListener,DatabaseRefere
         // 選択項目変更のイベント追加
         // キーボードが出てたら閉じる
 
-            // checkedIdから、選択されたRadioButtonを取得
+        // checkedIdから、選択されたRadioButtonを取得
 
-            // 選択項目変更のイベント追加
-            if(answer_type=="perform"){
-                radioGroup2.check(defect.id)
-            }
-            if(answer_type=="cospa"){
-                radioGroup2.check(update.id)
-            }
-            if(answer_type=="otherchoise"){
-                radioGroup2.check(mitsumori.id)
-            }
+        // 選択項目変更のイベント追加
+        if (answer_type == "perform") {
+            radioGroup2.check(defect.id)
+        }
+        if (answer_type == "cospa") {
+            radioGroup2.check(update.id)
+        }
+        if (answer_type == "otherchoise") {
+            radioGroup2.check(mitsumori.id)
+        }
 
-            radioGroup2.setOnCheckedChangeListener { group, checkedId ->
-                val radioButton = findViewById<RadioButton>(checkedId)
-                val im = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-                im.hideSoftInputFromWindow(group.windowToken, InputMethodManager.HIDE_NOT_ALWAYS)
+        radioGroup2.setOnCheckedChangeListener { group, checkedId ->
+            val radioButton = findViewById<RadioButton>(checkedId)
+            val im = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            im.hideSoftInputFromWindow(group.windowToken, InputMethodManager.HIDE_NOT_ALWAYS)
 
-            if(radioButton==perform){
-                radioButton.isChecked=true
-                cospa.isChecked=false
-                otherchoise.isChecked=false
-                answer_type="perform"
-            }
-            else if(radioButton==cospa){
-                radioButton.isChecked=true
-                perform.isChecked=false
-                otherchoise.isChecked=false
-                answer_type="cospa"
-            }
-            else if(radioButton==otherchoise){
-                radioButton.isChecked=true
-                perform.isChecked=false
-                cospa.isChecked=false
-                answer_type="otherchoise"
+            if (radioButton == perform) {
+                radioButton.isChecked = true
+                cospa.isChecked = false
+                otherchoise.isChecked = false
+                answer_type = "perform"
+            } else if (radioButton == cospa) {
+                radioButton.isChecked = true
+                perform.isChecked = false
+                otherchoise.isChecked = false
+                answer_type = "cospa"
+            } else if (radioButton == otherchoise) {
+                radioButton.isChecked = true
+                perform.isChecked = false
+                cospa.isChecked = false
+                answer_type = "otherchoise"
             }
         }
 
@@ -237,43 +270,46 @@ class QuestionActivity : AppCompatActivity(),View.OnClickListener,DatabaseRefere
             im.hideSoftInputFromWindow(group.windowToken, InputMethodManager.HIDE_NOT_ALWAYS)
             // checkedIdから、選択されたRadioButtonを取得
             val radioButton = findViewById<RadioButton>(checkedId)
-            if(old_type=="oldpart_yes"){
+            if (old_type == "oldpart_yes") {
                 radioGroup3.check(oldpart_yes.id)
             }
-            if(old_type=="oldpart_no"){
+            if (old_type == "oldpart_no") {
                 radioGroup3.check(oldpart_no.id)
             }
-            if(radioButton==oldpart_yes){
-                radioButton.isChecked=true
-                oldpart_no.isChecked=false
-                old_type="oldpart_yes"
-            }
-            else if(radioButton==oldpart_no){
-                radioButton.isChecked=true
-                oldpart_yes.isChecked=false
-                old_type="oldpart_no"
+            if (radioButton == oldpart_yes) {
+                radioButton.isChecked = true
+                oldpart_no.isChecked = false
+                old_type = "oldpart_yes"
+            } else if (radioButton == oldpart_no) {
+                radioButton.isChecked = true
+                oldpart_yes.isChecked = false
+                old_type = "oldpart_no"
             }
         }
         //ドロップリスト設定
         val spinner = findViewById<Spinner>(R.id.spinner)
-        val index=spinnerItems.binarySearch(part)
+        val index = spinnerItems.binarySearch(part)
         spinner.setSelection(index)
-        val adapter = ArrayAdapter(applicationContext,
-            android.R.layout.simple_spinner_item, spinnerItems)
-            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-             spinner.setPrompt("診断部位一覧")
+        val adapter = ArrayAdapter(
+            applicationContext,
+            android.R.layout.simple_spinner_item, spinnerItems
+        )
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        spinner.setPrompt("診断部位一覧")
         // spinner に adapter をセット
         // Kotlin Android Extensions
 
         spinner.adapter = adapter
         // リスナーを登録
-        spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+        spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             //　アイテムが選択された時
-            override fun onItemSelected(parent: AdapterView<*>?,
-                                        view: View?, position: Int, id: Long) {
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?, position: Int, id: Long
+            ) {
                 val spinnerParent = parent as Spinner
                 val item = spinnerParent.selectedItem as String
-                part=item
+                part = item
             }
 
             //　アイテムが選択されなかった
@@ -281,11 +317,11 @@ class QuestionActivity : AppCompatActivity(),View.OnClickListener,DatabaseRefere
                 return
             }
         }
-        resisterbutton.setOnClickListener { v->
+        resisterbutton.setOnClickListener { v ->
             // キーボードが出てたら閉じる
             val im = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
             im.hideSoftInputFromWindow(v.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS)
-
+            shop_check()
 
             // タイトルと本文を取得する
             val title = Titile_ditail.text.toString()
@@ -347,7 +383,8 @@ class QuestionActivity : AppCompatActivity(),View.OnClickListener,DatabaseRefere
             val name = sp.getString(NameKEY, "")
             val data = HashMap<String, String>()
             val dataBaseReference = FirebaseDatabase.getInstance().reference
-            val genreRef = dataBaseReference.child("report").child("shop").child(mCycle.shop_ID).child(cycle_uid)
+            val genreRef = dataBaseReference.child("report").child("shop").child(mCycle.shop_ID)
+                .child(cycle_uid)
 
             data["uid"] = user_uid
             data["cycle_name"] = cycle_name
@@ -363,9 +400,9 @@ class QuestionActivity : AppCompatActivity(),View.OnClickListener,DatabaseRefere
             data["com"] = com
             data["title"] = title
             data["yosan"] = yosan
-            data["distance"]=mCycle.distance
-            data["area"]=area
-
+            data["distance"] = mCycle.distance
+            data["area"] = area
+            data["day"]=create_day
 
             // 添付画像を取得する
             val drawable = imageView4.drawable as? BitmapDrawable
@@ -381,7 +418,10 @@ class QuestionActivity : AppCompatActivity(),View.OnClickListener,DatabaseRefere
             genreRef.setValue(data)
             //progressBar.visibility = View.VISIBLE
         }
+
+
     }
+
     @SuppressLint("MissingSuperCall")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == CHOOSER_REQUEST_CODE) {
@@ -425,6 +465,7 @@ class QuestionActivity : AppCompatActivity(),View.OnClickListener,DatabaseRefere
             mPictureUri = null
         }
     }
+
     override fun onClick(v: View) {
         if (v === imageView4) {
             // パーミッションの許可状態を確認する
@@ -448,15 +489,11 @@ class QuestionActivity : AppCompatActivity(),View.OnClickListener,DatabaseRefere
     }
 
 
-
-
-
-
-
-
-
-
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<String>,
+        grantResults: IntArray
+    ) {
         when (requestCode) {
             PERMISSIONS_REQUEST_CODE -> {
                 if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
@@ -490,12 +527,45 @@ class QuestionActivity : AppCompatActivity(),View.OnClickListener,DatabaseRefere
         chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, arrayOf(cameraIntent))
         startActivityForResult(chooserIntent, CHOOSER_REQUEST_CODE)
     }
+
     override fun onComplete(databaseError: DatabaseError?, databaseReference: DatabaseReference) {
         //progressBar.visibility = View.GONE
         if (databaseError == null) {
             finish()
         } else {
-            Snackbar.make(findViewById(android.R.id.content), "投稿に失敗しました", Snackbar.LENGTH_LONG).show()
+            Snackbar.make(findViewById(android.R.id.content), "投稿に失敗しました", Snackbar.LENGTH_LONG)
+                .show()
         }
     }
+
+    fun shop_check(){
+        var type=0
+        mDatabaseReference = FirebaseDatabase.getInstance().reference
+        mAuth = FirebaseAuth.getInstance()
+        mReportRef = mDatabaseReference.child("shop").child(mCycle.shop_ID)
+        mReportRef!!.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if (snapshot.value !== null) {
+
+                }else{
+                    AlertDialog.Builder(this@QuestionActivity) // FragmentではActivityを取得して生成
+                        .setTitle("エラー")
+                        .setMessage("店舗がみつかりません。メニューに戻ります")
+                        .setPositiveButton("OK", { dialog, which ->
+                            val intent = Intent(applicationContext, MainActivity::class.java)
+                            startActivity(intent)
+                        })
+                        .show()
+                }
+
+            }
+
+            override fun onCancelled(firebaseError: DatabaseError) {}
+        })
+
+
+
+    }
+
+
 }

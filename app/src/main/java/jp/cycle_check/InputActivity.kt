@@ -1,8 +1,6 @@
 package jp.cycle_check
 import android.annotation.SuppressLint
-import android.app.AlarmManager
 import android.app.DatePickerDialog
-import android.app.PendingIntent
 import android.app.TimePickerDialog
 import android.content.Context
 import android.content.Intent
@@ -10,15 +8,11 @@ import android.os.Bundle
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.text.set
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.database.*
 import io.realm.Realm
-import kotlinx.android.synthetic.main.activity_detail.*
 import kotlinx.android.synthetic.main.content_input.*
-import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.collections.HashMap
 
 class InputActivity : AppCompatActivity() {
 

@@ -1,16 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".CycleresisterActivity">
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
-
+        <TextView
+            android:id="@+id/pic"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="#696969"
+            android:text="写真"
+            android:gravity="center_vertical"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:textSize="16sp" />
         <TextView
             android:id="@+id/picTextview"
             android:layout_width="match_parent"
@@ -28,13 +38,33 @@
             android:scaleType="fitCenter"
             app:srcCompat="@android:color/darker_gray"
             android:layout_weight="2"/>
-
+        <TextView
+            android:id="@+id/name"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="#696969"
+            android:text="登録名"
+            android:gravity="center_vertical"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:textSize="16sp" />
         <EditText
             android:id="@+id/resisternameText"
             android:layout_width="match_parent"
             android:layout_height="62dp"
-            android:hint="ロードバイク名を入力"
+            android:hint="車両名を入力"
             android:layout_weight="2"/>
+        <TextView
+            android:id="@+id/type"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="#696969"
+            android:text="タイプ選択"
+            android:gravity="center_vertical"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:textSize="16sp" />
+
         <TextView
             android:id="@+id/typenameText"
             android:layout_width="match_parent"
@@ -48,11 +78,22 @@
             android:layout_margin="20dp"
             android:background="#fff" />
 
+        <TextView
+            android:id="@+id/id"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="#696969"
+            android:text="店舗id"
+            android:gravity="center_vertical"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:textSize="16sp" />
+
         <EditText
             android:id="@+id/resistershopText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="店舗番号を入力\n(購入店が本アプリ対象外の場合、0000を入力)"
+            android:hint="店舗番号を入力\n(不明の場合、0000を入力)"
             android:layout_weight="2"/>
 
         <ProgressBar
@@ -67,12 +108,23 @@
             android:id="@+id/cycleresisterbutton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:paddingStart="80dp"
+            android:paddingEnd="80dp"
+            android:paddingTop="20dp"
+            android:paddingBottom="20dp"
+            android:layout_margin="10dp"
+            android:layout_marginBottom="60dp"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:background="@drawable/button_corners"
+            android:textSize="16dp"
+            android:layout_gravity="center"
             android:layout_weight="2"
-            android:text="新奇登録" />
+            android:text="新規登録" />
 
 
 
     </LinearLayout>
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
